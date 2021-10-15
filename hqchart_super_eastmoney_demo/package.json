@@ -1,6 +1,6 @@
 {
   "name": "hqchart-demo",
-  "description": "hqchart kline tooltip demo",
+  "description": "hqchart data demo",
   "author": "jones",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
     "babel-preset-es2015": "^6.24.1",
     "element-ui": "^2.10.1",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.21",
     "promise-polyfill": "^6.0.2",
     "qs": "^6.5.0",
     "vue": "^2.1.8",
@@ -27,7 +28,7 @@
     "babel-preset-vue-app": "^1.2.0",
     "css-loader": "^0.27.0",
     "file-loader": "^0.10.1",
-    "hqchart": "^1.1.10426",
+    "hqchart": "^1.1.10440",
     "html-webpack-plugin": "^2.24.1",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",

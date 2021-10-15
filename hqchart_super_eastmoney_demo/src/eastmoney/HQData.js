@@ -1,3 +1,15 @@
+/*
+   Copyright (c) 2018 jones
+ 
+    http://www.apache.org/licenses/LICENSE-2.0
+
+   开源项目 https://github.com/jones2000/HQChart
+ 
+   jones_2000@163.com
+
+   行情数据对接,使用东方财富网页数据做为案例的测试数据源
+*/
+
 import $, { hasData } from 'jquery'
 import HQChart from 'hqchart'
 
@@ -12,6 +24,8 @@ HQData.Explain="东财财富网接口";
 
 HQData.SetMinuteChartCoordinate=function()
 {
+    HQChart.Chart.MARKET_SUFFIX_NAME.IsShowAvPrice=(upperSymbol)=>{ return HQData.IsShowAvPrice(upperSymbol); }
+
     //美股分时图坐标
     HQChart.Chart.JSChart.GetMinuteTimeStringData().CreateUSAData=()=>{ return HQData.CreateUSAData(HQChart.Chart.JSChart.GetMinuteTimeStringData()); }  //替换交易时间段
     HQChart.Chart.JSChart.GetMinuteCoordinateData().GetUSAData=(upperSymbol,width)=> { return HQData.GetUSAData(upperSymbol,width); }    	//替换X轴刻度信息
@@ -33,7 +47,46 @@ HQData.SetMinuteChartCoordinate=function()
     chinaFutrues.AddNewFutures({ Suffix:'.SHF', Symbol:"WR", Time:9, Decimal:2, Name:'线材' }); //obj= { Suffix:后缀, Symbol:品种代码, Time:交易时间段, Decimal:小数位数, Name:名字 }
     chinaFutrues.AddNewFutures({ Suffix:'.DCE', Symbol:"BB", Time:9, Decimal:2, Name:'胶合板' });
     chinaFutrues.AddNewFutures({ Suffix:'.DCE', Symbol:"JD", Time:9, Decimal:2, Name:'鸡蛋' });
+    chinaFutrues.AddNewFutures({ Suffix:'.DCE', Symbol:"LH", Time:9, Decimal:2, Name:'生猪' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"WH", Time:9, Decimal:0, Name:'强麦' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"PM", Time:9, Decimal:0, Name:'普麦' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"RI", Time:9, Decimal:0, Name:'早籼稻' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"RS", Time:9, Decimal:0, Name:'菜籽' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"JR", Time:9, Decimal:0, Name:'粳稻' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"LR", Time:9, Decimal:0, Name:'晚籼稻' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"LR", Time:9, Decimal:0, Name:'晚籼稻' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"SM", Time:9, Decimal:0, Name:'锰硅' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"SF", Time:9, Decimal:0, Name:'硅铁' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"AP", Time:9, Decimal:0, Name:'苹果' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"CJ", Time:9, Decimal:0, Name:'红枣' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"UR", Time:9, Decimal:0, Name:'尿素' });
+    chinaFutrues.AddNewFutures({ Suffix:'.CZC', Symbol:"PK", Time:9, Decimal:0, Name:'花生' });
+
+    //芝加哥期货交易所
+    var futrues=HQChart.Chart.JSChart.GetInternalTimeData("CBOTTimeData");
+    futrues.AddNewFutures({Symbol:"ZW", Time:3, Decimal:2, Name:'小麦' });
+    futrues.AddNewFutures({Symbol:"XW", Time:4, Decimal:2, Name:'迷你小麦' });
+    futrues.AddNewFutures({Symbol:"ZC", Time:3, Decimal:2, Name:'玉米' });
+    futrues.AddNewFutures({Symbol:"XC", Time:4, Decimal:2, Name:'迷你玉米' });
+    futrues.AddNewFutures({Symbol:"ZS", Time:3, Decimal:2, Name:'大豆' });
+    futrues.AddNewFutures({Symbol:"XK", Time:4, Decimal:2, Name:'迷你大豆' });
+    futrues.AddNewFutures({Symbol:"ZL", Time:3, Decimal:2, Name:'豆油' });
+    futrues.AddNewFutures({Symbol:"ZM", Time:3, Decimal:2, Name:'豆粕' });
+    futrues.AddNewFutures({Symbol:"ZO", Time:3, Decimal:2, Name:'燕麦' });
+    futrues.AddNewFutures({Symbol:"ZR", Time:3, Decimal:2, Name:'稻谷' });
+    futrues.AddNewFutures({Symbol:"ZL", Time:3, Decimal:2, Name:'豆油' });
+    futrues.AddNewFutures({Symbol:"NQ", Time:5, Decimal:2, Name:'小型纳指' });
+    futrues.AddNewFutures({Symbol:"ES", Time:5, Decimal:2, Name:'小型标普' });
+    futrues.AddNewFutures({Symbol:"YM", Time:5, Decimal:0, Name:'小型道指' });
+
+    //美国洲际交易所
+    var futrues=HQChart.Chart.JSChart.GetInternalTimeData("IPETimeData");
+    var lIndex=futrues.TIME_SPLIT.length;
+    futrues.TIME_SPLIT[lIndex]=HQData.GetCustomTradeTimeData("IPE_G");
+    futrues.TIME_SPLIT2[lIndex]=HQData.GetCustomTradeTimeData("IPE_G_2");
+    futrues.AddNewFutures({Symbol:"G", Time:lIndex, Decimal:0, Name:'低硫柴油' });
 }
+
 
 HQData.NetworkFilter=function(data, callback)
 {
@@ -82,6 +135,7 @@ HQData.RecvMinuteData=function(recvData, callback, option)
     var symbolUpper=symbol.toUpperCase();
     var isStockA=HQData.IsSHSZ(symbolUpper);
     var isChinaFutrues=HQData.IsChinaFutures(symbolUpper);
+    var isLME=HQChart.Chart.MARKET_SUFFIX_NAME.IsLME(symbolUpper);  //伦敦金属交易所
     if (isChinaFutrues) stock.yclearing=data.preSettlement; //期货昨结算价
 
     for(var i=0;i<data.trends.length; ++i)
@@ -106,6 +160,7 @@ HQData.RecvMinuteData=function(recvData, callback, option)
         }
 
         if (isStockA) stockItem.vol*=100;
+        if (isLME) stockItem.avprice=null;
 
         stock.date=date;
         stock.minute.push(stockItem);
@@ -135,7 +190,8 @@ HQData.RequestMinuteDaysData=function(data, callback)
         type: "GET",
         success:function(recvData) 
         {
-            if (HQChart.Chart.MARKET_SUFFIX_NAME.IsSHFE(symbolUpper) || HQChart.Chart.MARKET_SUFFIX_NAME.IsDCE(symbolUpper))
+            if (HQChart.Chart.MARKET_SUFFIX_NAME.IsSHFE(symbolUpper) || HQChart.Chart.MARKET_SUFFIX_NAME.IsDCE(symbolUpper) || 
+                HQChart.Chart.MARKET_SUFFIX_NAME.IsCZCE(symbolUpper) || HQChart.Chart.MARKET_SUFFIX_NAME.IsCFFEX(symbolUpper))
                 HQData.RecvMinuteDaysDataV2(recvData, callback, { Data:data, Obj:obj });      
             else 
                 HQData.RecvMinuteDaysData(recvData, callback, { Data:data, Obj:obj });                 
@@ -341,7 +397,7 @@ HQData.CorrectMinuteData=function(minuteData, xDatetime)
 }
 
 
-HQData.GetInternalSymbol=function(symbol)
+HQData.GetInternalSymbol=function(symbol)   //HQChart内置代码转成东方财富代码
 {
     var aryData=symbol.split(".");
 
@@ -405,6 +461,53 @@ HQData.GetInternalSymbol=function(symbol)
         var market=114;
         return { Market:market, Symbol:aryData[0] };
     }
+    else if (HQChart.Chart.MARKET_SUFFIX_NAME.IsCZCE(symbolUpper))
+    {
+        var market=115;
+        return { Market:market, Symbol:aryData[0] };
+    }
+    else if (HQChart.Chart.MARKET_SUFFIX_NAME.IsCFFEX(symbolUpper))
+    {
+        var market=8;
+        var arySymbol=aryData[0].split('_');
+        return { Market:market, Symbol:arySymbol[1] };
+    }
+    else if (HQChart.Chart.MARKET_SUFFIX_NAME.IsCBOT(symbolUpper))
+    {
+        var market=103;
+        return { Market:market, Symbol:aryData[0] };
+    }
+    else if (HQChart.Chart.MARKET_SUFFIX_NAME.IsNYMEX(symbolUpper))
+    {
+        var market=102;
+        return { Market:market, Symbol:aryData[0] };
+    }
+    else if (HQChart.Chart.MARKET_SUFFIX_NAME.IsCOMEX(symbolUpper))
+    {
+        var market=101;
+        return { Market:market, Symbol:aryData[0] };
+    }
+    else if (HQChart.Chart.MARKET_SUFFIX_NAME.IsNYBOT(symbolUpper))
+    {
+        var market=108;
+        return { Market:market, Symbol:aryData[0] };
+    }
+    else if (HQChart.Chart.MARKET_SUFFIX_NAME.IsLME(symbolUpper))
+    {
+        var market=109;
+        var arySymbol=aryData[0].split('_');
+        return { Market:market, Symbol:arySymbol[1] };
+    }
+    else if (HQChart.Chart.MARKET_SUFFIX_NAME.IsTOCOM(symbolUpper))
+    {
+        var market=111;
+        return { Market:market, Symbol:aryData[0] };
+    }
+    else if (HQChart.Chart.MARKET_SUFFIX_NAME.IsIPE(symbolUpper))
+    {
+        var market=112;
+        return { Market:market, Symbol:aryData[0] };
+    }
 }
 
 HQData.GetMinuteApiUrl=function(symbol, dayCount)
@@ -425,6 +528,127 @@ HQData.IsChinaFutures=function(symbol)  //国内期货
 {
     return HQChart.Chart.MARKET_SUFFIX_NAME.IsChinaFutures(symbol);
 }
+
+HQData.IsShowAvPrice=function(upperSymbol)   //是否显示均价
+{
+    if (HQChart.Chart.MARKET_SUFFIX_NAME.IsLME(upperSymbol)) return false;
+
+    return true;
+}
+
+HQData.IsShowVolChart=function(upperSymbol) //是否显示第2个成交量图
+{
+    if (HQChart.Chart.MARKET_SUFFIX_NAME.IsForeignExchange(upperSymbol)) return false;
+
+    return true;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+//  
+//  美国洲际交易所 重柴油
+//
+HQData.GetCustomTradeTimeData=function(key)
+{
+    if (key=="IPE_G")   //美国洲际交易所 重柴油 数据从7：50开始,是盘前数据吗????
+    {
+        //7:50-6:00
+        var data=
+        {
+            Name:'7:50-6:00',
+            Data:
+            [
+                { Start: 750, End: 2359 },
+                { Start: 0, End: 600 },
+            ],
+            Coordinate:
+            {
+                Full://完整模式
+                [
+                    { Value: 800, Text: '8:00' },
+                    { Value: 1000, Text: '10:00' },
+                    { Value: 1200, Text: '12:00' },
+                    { Value: 1400, Text: '14:00' },
+                    { Value: 1600, Text: '16:00' },
+                    { Value: 1800, Text: '18:00' },
+                    { Value: 2000, Text: '20:00' },
+                    { Value: 2200, Text: '22:00' },
+                    { Value: 0, Text: '0:00' },
+                    { Value: 200, Text: '2:00' },
+                    { Value: 400, Text: '4:00' },
+                    { Value: 600, Text: '6:00' },
+                ],
+                Simple: //简洁模式
+                [
+                    { Value: 800, Text: '8:00' },
+                    { Value: 1200, Text: '12:00' },
+                    { Value: 1600, Text: '16:00' },
+                    { Value: 2000, Text: '20:00' },
+                    { Value: 0, Text: '0:00' },
+                    { Value: 400, Text: '4:00' },
+                    { Value: 600, Text: '6:00' },
+                ],
+                Min:   //最小模式  
+                [
+                    { Value: 800, Text: '8:00' },
+                    { Value: 2000, Text: '20:00' },
+                    { Value: 600, Text: '6:00' }
+                ]
+            }
+        };
+
+        return data;
+    }
+    else if (key=="IPE_G_2")
+    {
+        var data=//ID=0 08:50-07:00
+        {
+            Name:'08:50-07:00',
+            Data:
+            [
+                { Start: 850, End: 2359 },
+                { Start: 0, End: 700 },
+            ],
+            Coordinate:
+            {
+                Full://完整模式
+                [
+                    { Value: 900, Text: '9:00' },
+                    { Value: 1100, Text: '11:00' },
+                    { Value: 1300, Text: '13:00' },
+                    { Value: 1500, Text: '15:00' },
+                    { Value: 1700, Text: '17:00' },
+                    { Value: 1900, Text: '19:00' },
+                    { Value: 2100, Text: '21:00' },
+                    { Value: 2300, Text: '23:00' },
+                    { Value: 1, Text: '1:00' },
+                    { Value: 300, Text: '3:00' },
+                    { Value: 500, Text: '5:00' },
+                    { Value: 700, Text: '7:00' }
+                ],
+                Simple: //简洁模式
+                [
+                    { Value: 900, Text: '9:00' },
+                    { Value: 1300, Text: '13:00' },
+                    { Value: 1700, Text: '17:00' },
+                    { Value: 2100, Text: '21:00' },
+                    { Value: 1, Text: '1:00' },
+                    { Value: 500, Text: '5:00' },
+                    { Value: 700, Text: '7:00' }
+                ],
+                Min:   //最小模式  
+                [
+                    { Value: 900, Text: '9:00' },
+                    { Value: 2100, Text: '21:00' },
+                    { Value: 700, Text: '7:00' }
+                ]
+            }
+        };
+
+        return data;
+    }
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////

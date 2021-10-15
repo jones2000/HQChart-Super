@@ -1,120 +1,62 @@
 <template>
-    <div id="app" ref='app' style="height:100%; width:100%">
-        <div ref='buttongroup' style="padding:5px">
-            <div>
-                <span>美股：</span>
-                <button  class='btn-style' @click="ChangeSymbol('NTES.usa')">网易</button>
-                <button  class='btn-style' @click="ChangeSymbol('MSFT.usa')">微软</button>
-                <button  class='btn-style' @click="ChangeSymbol('AMZN.usa')">亚马逊</button>
-                <button  class='btn-style' @click="ChangeSymbol('RENN.usa')">人人网</button>
-                <button  class='btn-style' @click="ChangeSymbol('DIDI.usa')">滴滴</button>
-                <button  class='btn-style' @click="ChangeSymbol('BABA.usa')">阿里巴巴</button>
-                <button  class='btn-style' @click="ChangeSymbol('ZH.usa')">知乎</button>
-                <button  class='btn-style' @click="ChangeSymbol('DJIA.usa')">道琼斯</button>
-                <button  class='btn-style' @click="ChangeSymbol('SPX.usa')">标普500</button>
-                <button  class='btn-style' @click="ChangeSymbol('NDX.usa')">纳斯达克</button>
-            </div>
-            <div>
-                <span>A股：</span>
-                <button  class='btn-style' @click="ChangeSymbol('600000.sh')">浦发银行</button>
-                <button  class='btn-style' @click="ChangeSymbol('300059.sz')">东方财富</button>
-                <button  class='btn-style' @click="ChangeSymbol('000001.sh')">上证指数</button>
-                <button  class='btn-style' @click="ChangeSymbol('399001.sz')">深证成指</button>
-            </div>
-            <div>
-                <span>港股：</span>
-                <button  class='btn-style' @click="ChangeSymbol('01211.hk')">比亚迪股份</button>
-                <button  class='btn-style' @click="ChangeSymbol('03968.hk')">招商银行</button>
-                <button  class='btn-style' @click="ChangeSymbol('00005.hk')">汇丰控股</button>
-                <button  class='btn-style' @click="ChangeSymbol('HSI.hk')">恒生指数</button>
-            </div>
-            <div>
-                <span>外汇：</span>
-                <button  class='btn-style' @click="ChangeSymbol('USDCAD.FOREX')">美元兑加元</button>
-                <button  class='btn-style' @click="ChangeSymbol('USDHKD.FOREX')">美元兑港币</button>
-                <button  class='btn-style' @click="ChangeSymbol('USDEUR.FOREX')">美元兑欧元</button>
-                <button  class='btn-style' @click="ChangeSymbol('USDHKD.FOREX')">美元兑港币</button>
-                <button  class='btn-style' @click="ChangeSymbol('EURGBP.FOREX')">欧元兑英镑</button>
-            </div>
-            <div>
-                <span>上期所：</span>
-                <button  class='btn-style' @click="ChangeSymbol('CUM.SHFE')">沪铜主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('SNM.SHFE')">沪锡主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('AUM.SHFE')">沪金主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('NIM.SHFE')">沪镍主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('RUM.SHFE')">橡胶主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('RBM.SHFE')">螺纹钢主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('AGM.SHFE')">沪银主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('WRM.SHFE')">线材主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('PBM.SHFE')">沪铅主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('ZNM.SHFE')">沪锌主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('BUM.SHFE')">石油沥青主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('ALM.SHFE')">沪铝主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('FUM.SHFE')">燃油主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('HCM.SHFE')">热轧卷板主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('SPM.SHFE')">纸浆主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('SSM.SHFE')">不锈钢主力</button>
-            </div>
-            <div>
-                <span>上期能源：</span>
-                <button  class='btn-style' @click="ChangeSymbol('SCM.SHFE')">原油主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('NRM.SHFE')">20号胶主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('LUM.SHFE')">低硫燃油主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('BCM.SHFE')">国际铜主力</button>
-            </div>
-            <div>
-                <span>大连商品交易所</span>
-                <button  class='btn-style' @click="ChangeSymbol('CM.DCE')">玉米主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('AM.DCE')">豆一主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('BM.DCE')">豆二主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('MM.DCE')">豆粕主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('MM.DCE')">豆粕主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('YM.DCE')">豆油主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('PM.DCE')">棕榈油主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('LM.DCE')">聚乙烯主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('VM.DCE')">聚氯乙烯主力</button>
-
-                <button  class='btn-style' @click="ChangeSymbol('JM.DCE')">焦炭主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('JMM.DCE')">焦煤主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('FBM.DCE')">纤维板主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('BBM.DCE')">胶合板主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('IM.DCE')">铁矿石主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('JDM.DCE')">鸡蛋主力</button>
-
-                <button  class='btn-style' @click="ChangeSymbol('PPM.DCE')">聚丙烯主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('CSM.DCE')">玉米淀粉主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('EGM.DCE')">乙二醇主力</button>
-                <button  class='btn-style' @click="ChangeSymbol('RRM.DCE')">粳米主力</button>
-            </div>
-            
-            <div>
-                <span>天数：</span>
-                <button  class='btn-style' @click="ChangeDayCount(1)">1日</button>
-                <button  class='btn-style' @click="ChangeDayCount(2)">2日</button>
-                <button  class='btn-style' @click="ChangeDayCount(3)">3日</button>
-                <button  class='btn-style' @click="ChangeDayCount(4)">4日</button>
-                <button  class='btn-style' @click="ChangeDayCount(5)">5日</button>
-            </div>
+  <div class="box">
+    <div class="left">
+      <el-menu
+        default-active="AAPL.usa"
+        class="el-menu-vertical-demo"
+        background-color="#191919"
+        text-color="#dee4eb"
+        active-text-color="#ff6900"
+        :unique-opened="true"
+        @select='handleSelect'
+        @open="handleOpen"
+        @close="handleClose">
+        <el-submenu v-for="item in NavMenuAry" :key="item.Title" :index="item.Title">
+          <template slot="title">
+            <i class="el-icon-menu"></i>
+            <span>{{item.Title}}</span>
+          </template>
+          <el-menu-item v-for="subItem in item.Sub" :key='subItem.Code' :index="subItem.Code">{{subItem.Name}}</el-menu-item>
+        </el-submenu>
+      </el-menu>
+    </div>
+    <div class="right" ref="right">
+      <div class="periodWrap" ref='periodWrap'>
+        <div class="btnGroup">
+          <div class="btn" :class="{active: periodIndex == index}" v-for="(period,index) in periodAry" :key="period" @click="changeChartPeroid(index)">{{period}}</div>
         </div>
+      </div>
+      
+      <div class='hqchart' id='kline' ref='kline'></div>
 
-        <div class='hqchart' id='kline' ref='kline'></div>
-     </div>
+      <div class="indexWrap" ref="indexWrap">
+        <div class="btnGroup">
+          <div class="btn"  v-for="(indexName) in indexAry" :key="indexName.ID" @click="changeChartIndex(indexName.ID)">{{indexName.Name}}</div>
+        </div>
+      </div>
 
+      <div class="statementWrap" ref="statementWrap">
+          郑重声明：本页面所有数据来自互联网或自动生成的测试数据,仅用于学习HQChart图形库使用,不构成任何投资价值信息。如使用者依据本网站提供的信息、资料及图表进行金融、证券等投资所造成的盈亏与本网站无关。
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-
-import $ from 'jquery'
+import _ from 'lodash'
 import HQChart from 'hqchart'
 import 'hqchart/src/jscommon/umychart.resource/css/tools.css'
 import 'hqchart/src/jscommon/umychart.resource/font/iconfont.css'
 import  EastMoney  from "./eastmoney/HQData.js"
+import HQData from './eastmoney/HQData.js'
 
 //源码调试用
 //import Chart from '../jscommon/umychart.vue/umychart.vue.js'
 //import '../jscommon/umychart.resource/css/tools.css'
 //import '../jscommon/umychart.resource/font/iconfont.css'
 //var HQChart={ Chart:Chart };
+
+
 
 function DefaultData() { }
 
@@ -131,13 +73,13 @@ DefaultData.GetMinuteOption=function()
         ], 
                 
         Symbol:'AAPL.usa',         
-        IsAutoUpdate:false,          //是自动更新数据
+        IsAutoUpdate:true,          //是自动更新数据
         AutoUpdateFrequency:20000,
-        DayCount:3,                 //1 最新交易日数据 >1 多日走势图
+        DayCount:1,                 //1 最新交易日数据 >1 多日走势图
         IsShowRightMenu:false,      //是否显示右键菜单
         //CorssCursorTouchEnd:true,
 
-        CorssCursorInfo:{  Left:2, Right:2 },
+        CorssCursorInfo:{  Left:1, Right:1 },
     
         MinuteLine:
         {
@@ -147,10 +89,12 @@ DefaultData.GetMinuteOption=function()
     
         Border: //边框
         {
-            Left:2,    //左边间距
-            Right:2,     //右边间距
+            Left:40,    //左边间距
+            Right:40,     //右边间距
             Top:25,
-            Bottom:25
+            Bottom:25,
+            AutoRight:{ Blank:10, MinWidth:40 },
+            AutoLeft:{ Blank:10, MinWidth:40 },
         },
                 
         Frame:  //子框架设置
@@ -168,85 +112,753 @@ DefaultData.GetMinuteOption=function()
     return option;
 }
 
-export default 
+DefaultData.GetIndexMenu=function()
 {
-    name:'HQChartDemo',
-    //外部传入的参数
-    props: 
+    var data=
     [
-        'DefaultCode',     //默认股票
-    ],
+        {Name:'MACD',ID:"MACD"},
+        {Name:'KDJ',ID:"KDJ"},
+        {Name:'DMI',ID:"DMI"},
+        {Name:'ROC',ID:"ROC"},
+    ];
 
-    data()
+    return data;
+}
+
+DefaultData.GetTestSymbolMenu=function()
+{
+    var data=
+    [
+        {
+            Title: '美股',
+            Icon: '',
+            Sub: 
+            [
+                {
+                    Name: '网易',
+                    Code: 'NTES.usa'
+                },
+                {
+                    Name: '微软',
+                    Code: 'MSFT.usa'
+                },
+                {
+                    Name: '亚马逊',
+                    Code: 'AMZN.usa'
+                },
+                {
+                    Name: '人人网',
+                    Code: 'RENN.usa'
+                },
+                {
+                    Name: '滴滴',
+                    Code: 'DIDI.usa'
+                },
+                {
+                    Name: '阿里巴巴',
+                    Code: 'BABA.usa'
+                },
+                {
+                    Name: '知乎',
+                    Code: 'ZH.usa'
+                },
+                {
+                    Name: '道琼斯',
+                    Code: 'DJIA.usa'
+                },
+                {
+                    Name: '标普500',
+                    Code: 'SPX.usa'
+                },
+                {
+                    Name: '纳斯达克',
+                    Code: 'NDX.usa'
+                }
+            ]
+        },
+        {
+            Title: '沪深A股',
+            Icon: '',
+            Sub: 
+            [
+                {
+                    Name: '浦发银行',
+                    Code: '600000.sh'
+                },
+                {
+                    Name: '东方财富',
+                    Code: '300059.sz'
+                },
+                {
+                    Name: '上证指数',
+                    Code: '000001.sh'
+                },
+                {
+                    Name: '深证成指',
+                    Code: '399001.sz'
+                }
+            ]
+        },
+        {
+            Title: '港股',
+            Icon: '',
+            Sub: 
+            [
+                {
+                    Name: '比亚迪股份',
+                    Code: '01211.hk'
+                },
+                {
+                    Name: '招商银行',
+                    Code: '03968.hk'
+                },
+                {
+                    Name: '汇丰控股',
+                    Code: '00005.hk'
+                },
+                {
+                    Name: '恒生指数',
+                    Code: 'HSI.hk'
+                }
+            ]
+        },
+        {
+            Title: '外汇',
+            Icon: '',
+            Sub: 
+            [
+                {
+                    Name: '美元兑加元',
+                    Code: 'USDCAD.FOREX'
+                },
+                {
+                    Name: '美元兑港币',
+                    Code: 'USDHKD.FOREX'
+                },
+                {
+                    Name: '美元兑欧元',
+                    Code: 'USDEUR.FOREX'
+                },
+                {
+                    Name: '欧元兑英镑',
+                    Code: 'EURGBP.FOREX'
+                }
+            ]
+        },
+        {
+            Title: '上海期货交易所',
+            Icon: '',
+            Sub: 
+            [
+                {
+                Name: '沪铜主力',
+                Code: 'CUM.SHFE'
+                },
+                {
+                Name: '沪锡主力',
+                Code: 'SNM.SHFE'
+                },
+                {
+                Name: '沪金主力',
+                Code: 'AUM.SHFE'
+                },
+                {
+                Name: '沪镍主力',
+                Code: 'NIM.SHFE'
+                },
+                {
+                Name: '橡胶主力',
+                Code: 'RUM.SHFE'
+                },
+                {
+                Name: '螺纹钢主力',
+                Code: 'RBM.SHFE'
+                },
+                {
+                Name: '沪银主力',
+                Code: 'AGM.SHFE'
+                },
+                {
+                Name: '线材主力',
+                Code: 'WRM.SHFE'
+                },
+                {
+                Name: '沪铅主力',
+                Code: 'PBM.SHFE'
+                },
+                {
+                Name: '沪锌主力',
+                Code: 'ZNM.SHFE'
+                },
+                {
+                Name: '石油沥青主力',
+                Code: 'BUM.SHFE'
+                },
+                {
+                Name: '沪铝主力',
+                Code: 'ALM.SHFE'
+                },
+                {
+                Name: '燃油主力',
+                Code: 'FUM.SHFE'
+                },
+                {
+                Name: '热轧卷板主力',
+                Code: 'HCM.SHFE'
+                },
+                {
+                Name: '纸浆主力',
+                Code: 'SPM.SHFE'
+                },
+                {
+                Name: '不锈钢主力',
+                Code: 'SSM.SHFE'
+                }
+            ]
+        },
+        {
+            Title: '上海国际能源交易中心',
+            Icon: '',
+            Sub: 
+            [
+                {
+                Name: '原油主力',
+                Code: 'SCM.SHFE'
+                },
+                {
+                Name: '20号胶主力',
+                Code: 'NRM.SHFE'
+                },
+                {
+                Name: '低硫燃油主力',
+                Code: 'LUM.SHFE'
+                },
+                {
+                Name: '国际铜主力',
+                Code: 'BCM.SHFE'
+                }
+            ]
+        },
+        {
+            Title: '大连商品交易所',
+            Icon: '',
+            Sub: 
+            [
+                {
+                Name: '玉米主力',
+                Code: 'CM.DCE'
+                },
+                {
+                Name: '豆一主力',
+                Code: 'AM.DCE'
+                },
+                {
+                Name: '豆二主力',
+                Code: 'BM.DCE'
+                },
+                {
+                Name: '豆粕主力',
+                Code: 'MM.DCE'
+                },
+                {
+                Name: '豆油主力',
+                Code: 'YM.DCE'
+                },
+                {
+                Name: '棕榈油主力',
+                Code: 'PM.DCE'
+                },
+                {
+                Name: '聚乙烯主力',
+                Code: 'LM.DCE'
+                },
+                {
+                Name: '聚氯乙烯主力',
+                Code: 'VM.DCE'
+                },
+
+                {
+                Name: '焦炭主力',
+                Code: 'JM.DCE'
+                },
+                {
+                Name: '焦煤主力',
+                Code: 'JMM.DCE'
+                },
+                {
+                Name: '纤维板主力',
+                Code: 'FBM.DCE'
+                },
+                {
+                Name: '胶合板主力',
+                Code: 'BBM.DCE'
+                },
+                {
+                Name: '铁矿石主力',
+                Code: 'IM.DCE'
+                },
+                {
+                Name: '鸡蛋主力',
+                Code: 'JDM.DCE'
+                },
+
+                {
+                Name: '聚丙烯主力',
+                Code: 'PPM.DCE'
+                },
+                {
+                Name: '玉米淀粉主力',
+                Code: 'CSM.DCE'
+                },
+                {
+                Name: '乙二醇主力',
+                Code: 'EGM.DCE'
+                },
+                {
+                Name: '粳米主力',
+                Code: 'RRM.DCE'
+                },
+                {
+                Name: '苯乙烯主力',
+                Code: 'EBM.DCE'
+                },
+                {
+                Name: 'LPG主力',
+                Code: 'PGM.DCE'
+                },
+                {
+                Name: '生猪主力',
+                Code: 'LHM.DCE'
+                }
+            ]
+        },
+        {
+            Title: '郑州商品交易所',
+            Icon: '',
+            Sub: 
+            [
+                {
+                    Name: '强麦主力',
+                    Code: 'WHM.CZC'
+                },
+                {
+                    Name: '普麦主力',
+                    Code: 'PMM.CZC'
+                },
+                {
+                    Name: '一号棉花主力',
+                    Code: 'CFM.CZC'
+                },
+                {
+                    Name: '白糖主力',
+                    Code: 'SRM.CZC'
+                },
+                {
+                    Name: 'PTA主力',
+                    Code: 'TAM.CZC'
+                },
+                {
+                    Name: '菜油主力',
+                    Code: 'OIM.CZC'
+                },
+                {
+                    Name: '早籼稻主力',
+                    Code: 'RIM.CZC'
+                },
+                {
+                    Name: '甲醇主力',
+                    Code: 'MAM.CZC'
+                },
+                {
+                    Name: '玻璃主力',
+                    Code: 'FGM.CZC'
+                },
+                {
+                    Name: '菜籽主力',
+                    Code: 'RSM.CZC'
+                },
+                {
+                    Name: '菜粕主力',
+                    Code: 'RMM.CZC'
+                },
+                {
+                    Name: '粳稻主力',
+                    Code: 'JRM.CZC'
+                },
+                {
+                    Name: '晚籼稻主力',
+                    Code: 'LRM.CZC'
+                },
+                {
+                    Name: '硅铁主力',
+                    Code: 'SFM.CZC'
+                },
+                {
+                    Name: '锰硅主力',
+                    Code: 'SMM.CZC'
+                },
+                {
+                    Name: '动力煤主力',
+                    Code: 'ZCM.CZC'
+                },
+                {
+                    Name: '棉纱主力',
+                    Code: 'CYM.CZC'
+                },
+                {
+                    Name: '苹果主力',
+                    Code: 'APM.CZC'
+                },
+                {
+                    Name: '红枣主力',
+                    Code: 'CJM.CZC'
+                },
+                {
+                    Name: '尿素主力',
+                    Code: 'URM.CZC'
+                },
+                {
+                    Name: '纯碱主力',
+                    Code: 'SAM.CZC'
+                },
+                {
+                    Name: '短纤主力',
+                    Code: 'PFM.CZC'
+                },
+                {
+                    Name: '花生主力',
+                    Code: 'PKM.CZC'
+                },
+            ]
+        },
+        {
+            Title:"中国金融期货交易所",
+            Icon: '',
+            Sub:
+            [
+                {
+                    Name: '二债主力',
+                    Code: 'TS_130130.CFE'
+                },
+                {
+                    Name: '五债主力',
+                    Code: 'TF_050130.CFE'
+                },
+                {
+                    Name: '十债主力',
+                    Code: 'T_110130.CFE'
+                },
+                {
+                    Name: '上证主力',
+                    Code: 'IH_070130.CFE'
+                },
+                {
+                    Name: '中证主力',
+                    Code: 'IC_060130.CFE'
+                },
+                {
+                    Name: '沪深主力',
+                    Code: 'IF_040130.CFE'
+                }
+            ]
+        },
+        {
+            Title:"芝加哥商业交易所",
+            Icon: '',
+            Sub:
+            [
+                {
+                    Name: '小麦当月连续',
+                    Code: 'ZW00Y.CBOT'
+                },
+                {
+                    Name: '迷你小麦当月连续',
+                    Code: 'XW00Y.CBOT'
+                },
+                {
+                    Name: '玉米当月连续',
+                    Code: 'ZC00Y.CBOT'
+                },
+                {
+                    Name: '迷你玉米当月连续',
+                    Code: 'XC00Y.CBOT'
+                },
+                {
+                    Name: '大豆当月连续',
+                    Code: 'ZS00Y.CBOT'
+                },
+                {
+                    Name: '迷你大豆当月连续',
+                    Code: 'XK00Y.CBOT'
+                },
+                {
+                    Name: '豆油当月连续',
+                    Code: 'ZL00Y.CBOT'
+                },
+                {
+                    Name: '豆粕当月连续',
+                    Code: 'ZM00Y.CBOT'
+                },
+                {
+                    Name: '燕麦当月连续',
+                    Code: 'ZO00Y.CBOT'
+                },
+                {
+                    Name: '稻谷当月连续',
+                    Code: 'ZR00Y.CBOT'
+                },
+
+                {
+                    Name: '小型纳指当月连续',
+                    Code: 'NQ00Y.CBOT'
+                },
+                {
+                    Name: '小型标普当月连续',
+                    Code: 'ES00Y.CBOT'
+                },
+                {
+                    Name: '小型道指当月连续',
+                    Code: 'YM00Y.CBOT'
+                },
+                
+                {
+                    Name: '2年美国债当月连续',
+                    Code: 'TU00Y.CBOT'
+                },
+                {
+                    Name: '5年美国债当月连续',
+                    Code: 'FV00Y.CBOT'
+                },
+                {
+                    Name: '10年美国债当月连续',
+                    Code: 'TY00Y.CBOT'
+                },
+                {
+                    Name: '30年美国债当月连续',
+                    Code: 'US00Y.CBOT'
+                },
+                {
+                    Name: '超国债当月连续',
+                    Code: 'UL00Y.CBOT'
+                },
+            ]
+        },
+        {
+            Title:"纽约商品交易所",
+            Icon: '',
+            Sub:
+            [
+                {
+                    Name: 'NYMEX原油',
+                    Code: 'CL00Y.NYMEX'
+                },
+                {
+                    Name: 'NYMEX铂金',
+                    Code: 'PL00Y.NYMEX'
+                },
+                {
+                    Name: '迷你原油',
+                    Code: 'QM00Y.NYMEX'
+                },
+                {
+                    Name: 'NYMEX燃油',
+                    Code: 'HO00Y.NYMEX'
+                },
+                {
+                    Name: 'NYMEX汽油',
+                    Code: 'RB00Y.NYMEX'
+                },
+                 {
+                    Name: 'NYMEX钯金',
+                    Code: 'PA00Y.NYMEX'
+                },
+                {
+                    Name: '热轧钢卷',
+                    Code: 'HR00Y.NYMEX'
+                },
+                {
+                    Name: '天然气',
+                    Code: 'NG00Y.NYMEX'
+                },
+            ]
+        },
+        {
+            Title:"纽约商业期货交易所",
+            Icon: '',
+            Sub:
+            [
+                {
+                    Name: 'COMEX白银',
+                    Code: 'SI00Y.COMEX'
+                },
+                {
+                    Name: '迷你白银',
+                    Code: 'QI00Y.COMEX'
+                },
+                {
+                    Name: '微型黄金',
+                    Code: 'MGC00Y.COMEX'
+                },
+                {
+                    Name: '迷你黄金',
+                    Code: 'QO00Y.COMEX'
+                },
+                {
+                    Name: 'COMEX黄金',
+                    Code: 'GC00Y.COMEX'
+                },
+                {
+                    Name: 'COMEX铜',
+                    Code: 'HG00Y.COMEX'
+                }
+            ]
+        },
+        {
+            Title:"纽约期货交易所",
+            Icon: '',
+            Sub:
+            [
+                 {
+                    Name: '棉花当月连续',
+                    Code: 'CT00Y.NYBOT'
+                },
+            ]
+        },
+        {
+            Title:"伦敦金属交易所",
+            Icon: '',
+            Sub:
+            [
+                {
+                    Name: '综合镍03',
+                    Code: 'NI_LNKT.LME'
+                },
+                {
+                    Name: '综合铜03',
+                    Code: 'CA_LCPT.LME'
+                },
+                {
+                    Name: '综合铝03',
+                    Code: 'AH_LALT.LME'
+                },
+                {
+                    Name: '综合锡03',
+                    Code: 'SN_LTNT.LME'
+                },
+                {
+                    Name: '综合锌03',
+                    Code: 'ZS_LZNT.LME'
+                },
+                {
+                    Name: '综合铅03',
+                    Code: 'PB_LLDT.LME'
+                },
+            ]
+        },
+        {
+            Title:"东京商品交易所",
+            Icon: '',
+            Sub:
+            [
+                {
+                    Name: '日铂金当月连续',
+                    Code: 'JPL00Y.TOCOM'
+                },
+                {
+                    Name: '日白银当月连续',
+                    Code: 'JAG00Y.TOCOM'
+                },
+                {
+                    Name: '日原油当月连续',
+                    Code: 'JCO00Y.TOCOM'
+                },
+                {
+                    Name: '日煤油当月连续',
+                    Code: 'JKE00Y.TOCOM'
+                },
+                {
+                    Name: '日橡胶当月连续',
+                    Code: 'JRU00Y.TOCOM'
+                },
+                {
+                    Name: '日黄金当月连续',
+                    Code: 'JAU00Y.TOCOM'
+                },
+                {
+                    Name: '日汽油当月连续',
+                    Code: 'JGL00Y.TOCOM'
+                },
+            ]
+        },
+         {
+            Title:"美国洲际交易所",
+            Icon: '',
+            Sub:
+            [
+                {
+                    Name: '布伦特原油当月连续',
+                    Code: 'B00Y.IPE'
+                },
+                {
+                    Name: '重柴油当月连续',
+                    Code: 'G00Y.IPE'
+                },
+            ]
+        },
+    ];
+
+    return data;
+}
+
+export default {
+    data () 
     {
-        let data=
-        { 
-            Symbol:'AAPL.usa',      //HQChart内部编码美股加后缀.usa
+        var data=
+        {
+            periodAry: ['1日','2日','3日','4日','5日'],
+            periodIndex: 0,
+            indexAry: DefaultData.GetIndexMenu(),
+
+            indexActive: 0,
+            Symbol:'AAPL.usa',      //HQChart内部编码美股加后缀.usa AAPL.usa
             Chart:null,             //图形控件
+            NavMenuAry: DefaultData.GetTestSymbolMenu(),
+
+            VolChartHeight:10,
         }
 
         return data;
     },
 
-    created:function()
+    mounted () 
     {
-        //处理默认传入的参数
-        if (this.DefaultCode) 
-        {
-            this.Symbol=this.DefaultCode; //默认股票
-        }
-    },
-
-    mounted:function()
-    {
-        console.log(`[HQChartDemo::mounted]`);
-        window.onresize = ()=>{ this.OnSize() }
-
-        //一直交易 调试用
-        //HQChart.Chart.MARKET_SUFFIX_NAME.GetMarketStatus = function (symbol)  { return 2;  }
-
-        this.OnSize();              //子组件的mounted在父组件的mounted之前执行了  
+        this.OnSize()
         this.SetChartStyle();
-        this.CreateMinuteChart();  
+        this.$nextTick(() => 
+        {
+            this.CreateMinuteChart(); 
+        })
+
+        window.onresize = _.debounce(this.OnSize, 200)
     },
 
-    methods:
+    methods: 
     {
-        //////////////////////////////////////////////////////////////////////////////
-        ChangeIndex(windowIndex,name) //切换指标  windowIndex=窗口索引, name=指标名字
+        OnSize() 
         {
-            this.Chart.ChangeIndex(windowIndex,name);
-        },
+            const width = this.$refs.right.clientWidth
+            const periodWrap = this.$refs.periodWrap
+            const indexWrap = this.$refs.indexWrap
+            const statementWrap = this.$refs.statementWrap
+            const kline = this.$refs.kline
 
-        ChangeSymbol(code)   //切换股票
-        {
-            this.Symbol=code;
-            this.Chart.ChangeSymbol(this.Symbol);
-        },
+            const chartHeight = window.innerHeight - periodWrap.offsetHeight - indexWrap.offsetHeight - statementWrap.offsetHeight
+            kline.style.width = width + 'px'
+            kline.style.height = chartHeight + 'px'
+            console.log(width, chartHeight);
 
-        ChangeDayCount(dayCount)
-        {
-            this.Chart.ChangeDayCount(dayCount);
-        },
-
-        ///////////////////////////////////////////////////////////////////////////////////
-        //内部接口
-        OnSize()
-        { 
-            var app=this.$refs.app;
-            var height= app.offsetHeight;
-            var width = app.offsetWidth;
-            console.log(`[HQChartDemo::OnSize] width=${width} height=${height}`); 
-
-            var groupbutton=this.$refs.buttongroup;
-            var buttonsWidth=groupbutton.offsetHeight;
-
-            //获取屏幕大小 动态设置K线的div大小
-            var kline=this.$refs.kline;
-            kline.style.width=width+'px';;
-            kline.style.height=(height-buttonsWidth)+'px';
-
-            if (this.Chart) this.Chart.OnSize();
+            if(this.Chart) this.Chart.OnSize()
+        
         },
 
         SetChartStyle()
@@ -254,20 +866,6 @@ export default
             EastMoney.HQData.SetMinuteChartCoordinate();
             var blackStyle=HQChart.Chart.HQChartStyle.GetStyleConfig(HQChart.Chart.STYLE_TYPE_ID.BLACK_ID); //读取黑色风格配置
             HQChart.Chart.JSChart.SetStyle(blackStyle);
-        },
-
-        ClearChart()    
-        {
-            if (!this.Chart) return;
-
-            this.Chart.ChartDestory();    //停止定时器
-            this.Chart=null;  //清空实例
-
-            var divKLine=this.$refs.kline;
-            while (divKLine.hasChildNodes()) 
-            {
-                divKLine.removeChild(divKLine.lastChild);
-            }　
         },
 
         CreateMinuteChart()
@@ -281,6 +879,18 @@ export default
             var chart=HQChart.Chart.JSChart.Init(this.$refs.kline);
             chart.SetOption(option);
             this.Chart=chart;
+        },
+
+        changeChartPeroid(index)   //周期
+        { 
+            this.periodIndex = index
+            const dayCount = index + 1
+            this.Chart.ChangeDayCount(dayCount);
+        },
+
+        changeChartIndex(id) 
+        { 
+            this.Chart.ChangeIndex(2,id);
         },
 
         NetworkFilter(data, callback)   //第3方数据替换接口
@@ -299,25 +909,133 @@ export default
             }
         },
 
+        handleSelect(key, keyPath) 
+        {
+            console.log(key, keyPath);
+            this.Symbol=keyPath[1];
+
+            var symbolUpper=this.Symbol.toUpperCase();
+            var isShowVolChart=EastMoney.HQData.IsShowVolChart(symbolUpper);
+            var frame=this.Chart.JSChartContainer.Frame.SubFrame[1];
+            if (isShowVolChart)
+            {
+                if (frame.Height<=0) frame.Height=this.VolChartHeight; 
+            }
+            else
+            {
+                if (frame.Height>0) this.VolChartHeight=frame.Height;
+                frame.Height=0;
+            }
+            this.Chart.ChangeSymbol(this.Symbol);
+        },
+
+        handleOpen(key, keyPath) 
+        {
+            console.log(key, keyPath);
+        },
+
+        handleClose(key, keyPath) 
+        {
+            console.log(key, keyPath);
+        }
     }
 }
-
-
 </script>
 
 <style lang="less">
-.hqchart
-{
-    position: relative;
-    background-color: rgb(0,0,0);
+@animation-duration: 0.3s;
+.box{
+  width: 100%;
+  height: 100%;
+  // display: flex;
+  position: relative;
+  overflow: hidden;
+
+  .left,
+  .right{
+    position: absolute;
+    top: 0;
+  }
+
+  .left{
+    width: 240px;
+    height: 100%;
+    box-sizing: border-box;
+    left: 0;
+    // padding-top: 17px;
+    overflow-x: auto;
+    
+    .el-menu{
+      min-height: 100%;
+      border-right: solid 1px #000;
+      
+      .el-submenu__title:hover{
+        background-color: #363636!important; 
+      }
+
+      .el-menu-item:hover {
+        background-color: #363636!important;
+      }
+    }
+    
+  }
+
+  .right{
+    left: 240px;
+    width: calc(100% - 240px);
+    height: 100%;
+
+    .btnGroup{
+      border: 1px solid #242424;
+      color: #bcbfc4;
+      display: flex;
+      background: #191919;
+
+      .btn{
+        height: 40px;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-right: 1px solid #242424;
+        cursor: pointer;
+
+        &:last-child{
+          border-right: none;
+        }
+
+        &:hover,
+        &.active
+        {
+          color: #ff6900;
+        }
+      }
+    }
+
+    // .el-button-group{
+    //   width: 100%;
+    //   display: flex;
+
+    //   .el-button{
+    //     flex: 1;
+    //   }
+    // }
+
+    #kline{
+      background-color: rgb(0,0,0);
+      height: 300px;
+    }
+
+    .statementWrap{
+        background: #191919;
+        padding: 10px;
+        font-size: 12px;
+        color: red;
+        line-height: 20px;
+        text-align: center;
+    }
+  }
 }
 
-.btn-style
-{
-    padding: 3px 8px;
-    border: 1px solid #ececec;
-    border-radius: 5px;
-    background-color: #f5f5f5;
-    cursor: pointer;
-}
+
 </style>
