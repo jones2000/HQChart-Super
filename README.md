@@ -9,7 +9,7 @@ HQChart插件对接第3方数据用例
 ## 1.对接东方财富网页数据
 ### 示例源码地址
 [工程地址(hqchart_super_eastmoney_demo)](/hqchart_super_eastmoney_demo)
-### 分时图/多日分时图实例包含市场
+### 分时图/多日分时图/K线图实例包含市场
 1. 美股
 2. 沪深A股
 3. 港股
