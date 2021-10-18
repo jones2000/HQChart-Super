@@ -8,6 +8,7 @@
    jones_2000@163.com
 
    行情数据对接,使用东方财富网页数据做为案例的测试数据源
+   教程中所有的实例中使用的数据都来自互联网,或测试数据。仅用于学习HQChart图形使用. 教程禁止用于商业产品
 */
 
 import $, { hasData } from 'jquery'
@@ -25,6 +26,7 @@ HQData.Explain="东财财富网接口";
 HQData.SetMinuteChartCoordinate=function()
 {
     HQChart.Chart.MARKET_SUFFIX_NAME.IsShowAvPrice=(upperSymbol)=>{ return HQData.IsShowAvPrice(upperSymbol); }
+    HQChart.Chart.MARKET_SUFFIX_NAME.IsEnableRight=(period, symbol)=> { return HQData.IsEnableRight(period, symbol); }
 
     //美股分时图坐标
     HQChart.Chart.JSChart.GetMinuteTimeStringData().CreateUSAData=()=>{ return HQData.CreateUSAData(HQChart.Chart.JSChart.GetMinuteTimeStringData()); }  //替换交易时间段
@@ -85,6 +87,14 @@ HQData.SetMinuteChartCoordinate=function()
     futrues.TIME_SPLIT[lIndex]=HQData.GetCustomTradeTimeData("IPE_G");
     futrues.TIME_SPLIT2[lIndex]=HQData.GetCustomTradeTimeData("IPE_G_2");
     futrues.AddNewFutures({Symbol:"G", Time:lIndex, Decimal:0, Name:'低硫柴油' });
+
+    //自定义类型
+    HQChart.Chart.JSChart.GetMinuteTimeStringData().GetET=(upperSymbol)=>{ return HQData.GetETTimeData(upperSymbol,HQChart.Chart.JSChart.GetMinuteTimeStringData()); }              //当天所有的交易时间点
+    HQChart.Chart.JSChart.GetMinuteCoordinateData().GetETData=(upperSymbol)=> { return HQData.GetETData(upperSymbol); }   //X轴刻度设置
+    HQChart.Chart.MARKET_SUFFIX_NAME.GetETDecimal = (symbol)=> { return HQData.GetETDecimal(symbol); } // 不同品种，使用不同小数位数
+    HQChart.Chart.MARKET_SUFFIX_NAME.IsETShowAvPrice=(symbol)=> {return false; }   //提示信息是否显示均线数值
+    HQChart.Chart.MARKET_SUFFIX_NAME.GetETMarketStatus=(symbol)=> { return 2; }   //获取市场状态 0=闭市 1=盘前 2=盘中 3=盘后
+
 }
 
 
@@ -99,6 +109,23 @@ HQData.NetworkFilter=function(data, callback)
             break;
         case "MinuteChartContainer::RequestHistoryMinuteData":
             HQData.RequestMinuteDaysData(data, callback);
+            break;
+
+        case 'KLineChartContainer::RequestHistoryData':                 //日线全量数据下载
+            HQData.RequestHistoryData(data,callback);
+            break;
+        case 'KLineChartContainer::RequestRealtimeData':                //日线实时数据更新
+            HQData.RequestRealtimeData(data,callback);
+            break;
+        case 'KLineChartContainer::RequestFlowCapitalData':             //流通股本
+            HQData.RequestFlowCapitalData(data,callback);
+            break;
+
+        case 'KLineChartContainer::ReqeustHistoryMinuteData':           //分钟全量数据下载
+            HQData.RequestHistoryMinuteData(data, callback);
+            break;
+        case 'KLineChartContainer::RequestMinuteRealtimeData':          //分钟增量数据更新
+            HQData.RequestMinuteRealtimeData(data,callback);
             break;
     }
 }
@@ -442,7 +469,6 @@ HQData.GetInternalSymbol=function(symbol)   //HQChart内置代码转成东方财
     else if (HQChart.Chart.MARKET_SUFFIX_NAME.IsForeignExchange(symbolUpper))   //外汇
     {
         var market=119;
-
         return { Market:market, Symbol:aryData[0] };
     }
     else if (HQChart.Chart.MARKET_SUFFIX_NAME.IsSHFE(symbolUpper))
@@ -508,6 +534,17 @@ HQData.GetInternalSymbol=function(symbol)   //HQChart内置代码转成东方财
         var market=112;
         return { Market:market, Symbol:aryData[0] };
     }
+    else if (HQChart.Chart.MARKET_SUFFIX_NAME.IsET(symbolUpper))
+    {
+        var market=100;
+        var set100Market=new Set
+        (
+            ["UDI"]
+        );
+        if (set100Market.has(aryData[0])) market=100;
+
+        return { Market:market, Symbol:aryData[0] };
+    }
 }
 
 HQData.GetMinuteApiUrl=function(symbol, dayCount)
@@ -532,6 +569,7 @@ HQData.IsChinaFutures=function(symbol)  //国内期货
 HQData.IsShowAvPrice=function(upperSymbol)   //是否显示均价
 {
     if (HQChart.Chart.MARKET_SUFFIX_NAME.IsLME(upperSymbol)) return false;
+    if (upperSymbol=="UDI.ET") return false;
 
     return true;
 }
@@ -539,6 +577,7 @@ HQData.IsShowAvPrice=function(upperSymbol)   //是否显示均价
 HQData.IsShowVolChart=function(upperSymbol) //是否显示第2个成交量图
 {
     if (HQChart.Chart.MARKET_SUFFIX_NAME.IsForeignExchange(upperSymbol)) return false;
+    if (upperSymbol=="UDI.ET") return false;
 
     return true;
 }
@@ -909,6 +948,449 @@ HQData.GetForeignExchangeData=function(upperSymbol,width)
     } 
 
     return FOREX_MINUTE_X_COORDINATE;
+}
+
+
+////////////////////////////////////////////////////////////////////////
+//  美元指数
+//
+///////////////////////////////////////////////////////////////////////
+HQData.GetETTimeData=function(upperSymbol,minuteStringData)
+{
+    if (upperSymbol=="UDI.ET")
+    {
+        //美元指数 6:00 - 5:59
+        const TIME_SPLIT=           
+        [
+            { Start:600, End:2359 },
+            { Start:0,  End:559 },
+        ];
+
+        return minuteStringData.CreateTimeData(TIME_SPLIT);
+    }
+}
+
+HQData.GetETData=function(upperSymbol)
+{
+    if (upperSymbol=="UDI.ET")
+    {
+        const data=
+        {
+            Full:   //完整模式
+            [
+                [0, 1, "RGB(200,200,200)", "06:00"],
+                [120, 1, "RGB(200,200,200)", "08:00"],
+                [240, 1, "RGB(200,200,200)", "10:00"],
+                [360, 1, "RGB(200,200,200)", "12:00"],
+                [480, 0, "RGB(200,200,200)", "14:00"],
+                [600, 1, "RGB(200,200,200)", "16:00"],
+                [720, 1, "RGB(200,200,200)", "18:00"],
+                [840, 1, "RGB(200,200,200)", "20:00"],
+                [960, 1, "RGB(200,200,200)", "22:00"],
+                [1080, 1, "RGB(200,200,200)", "0:00"],
+                [1200, 1, "RGB(200,200,200)", "02:00"],
+                [1320, 1, "RGB(200,200,200)", "04:00"],
+                [1439, 1, "RGB(200,200,200)", "05:59"],
+            ],
+            Simple: //简洁模式
+            [
+                [0, 1, "RGB(200,200,200)", "06:00"],
+                [240, 1, "RGB(200,200,200)", "10:00"],
+                [480, 0, "RGB(200,200,200)", "14:00"],
+                [720, 1, "RGB(200,200,200)", "18:00"],
+                [960, 1, "RGB(200,200,200)", "22:00"],
+                [1200, 1, "RGB(200,200,200)", "02:00"],
+                [1439, 1, "RGB(200,200,200)", "05:59"],
+            ],
+            Min:   //最小模式     
+            [
+                [0, 1, "RGB(200,200,200)", "06:00"],
+                [720, 1, "RGB(200,200,200)", "18:00"],
+                [1439, 1, "RGB(200,200,200)", "05:59"],
+            ],
+    
+            Count: 1440,
+            MiddleCount: 600,
+    
+            GetData: function (width) 
+            {
+                if (width < 200) return this.Min;
+                else if (width < 450) return this.Simple;
+    
+                return this.Full;
+            }
+        } 
+    
+        return data;
+    }
+}
+
+HQData.GetETDecimal=function(symbol)
+{
+    var upperSymbol=symbol.toUpperCase();
+    if (upperSymbol=="UDI.ET") return 2;
+
+    return 2;
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+//K线数据对接
+//
+/////////////////////////////////////////////////////////////////////////////////
+HQData.GetKLineApiUrl=function(symbol, period, right, option)
+{
+    //https://push2his.eastmoney.com/api/qt/stock/kline/get?fields1=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61&beg=0&end=20500101&ut=fa5fd1943c7b386f172d6893dbfba10b&rtntype=6&secid=0.300059&klt=101&fqt=0
+
+    var internalSymbol=HQData.GetInternalSymbol(symbol);
+    var internalPeriod=HQData.GetInternalPeriod(period);
+    var internalRight=HQData.GetInternalRight(right);
+    if (option && option.Update==true)
+    {
+        var beginDate=option.End;
+        var url=`/eastmoney/api/qt/stock/kline/get?fields1=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61&beg=${beginDate}&end=20500101&ut=fa5fd1943c7b386f172d6893dbfba10b&rtntype=6&secid=${internalSymbol.Market}.${internalSymbol.Symbol}&klt=${internalPeriod}&fqt=${internalRight}`;
+    }
+    else
+    {
+        var url=`/eastmoney/api/qt/stock/kline/get?fields1=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61&beg=0&end=20500101&ut=fa5fd1943c7b386f172d6893dbfba10b&rtntype=6&secid=${internalSymbol.Market}.${internalSymbol.Symbol}&klt=${internalPeriod}&fqt=${internalRight}`;
+    }
+
+    return { Url:url, Symbol:symbol, InternalSymbol:internalSymbol, Period:period, Right:right };
+}
+
+HQData.GetMinuteKLineApiUrl=function(symbol, period, right, option)
+{
+    //https://push2his.eastmoney.com/api/qt/stock/kline/get?fields1=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61&beg=0&end=20500101&ut=fa5fd1943c7b386f172d6893dbfba10b&rtntype=6&secid=0.300059&klt=101&fqt=0
+
+    var internalSymbol=HQData.GetInternalSymbol(symbol);
+    var internalPeriod=HQData.GetInternalPeriod(period);
+    var internalRight=HQData.GetInternalRight(right);
+
+    if (option && option.Update==true)
+    {
+        var beginDate=option.End;
+        var url=`/eastmoney/api/qt/stock/kline/get?fields1=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61&beg=${beginDate}&end=20500101&ut=fa5fd1943c7b386f172d6893dbfba10b&rtntype=6&secid=${internalSymbol.Market}.${internalSymbol.Symbol}&klt=${internalPeriod}&fqt=${internalRight}`;
+    }
+    else
+    {
+        var url=`/eastmoney/api/qt/stock/kline/get?fields1=f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61&beg=0&end=20500101&ut=fa5fd1943c7b386f172d6893dbfba10b&rtntype=6&secid=${internalSymbol.Market}.${internalSymbol.Symbol}&klt=${internalPeriod}&fqt=${internalRight}`;
+    }
+
+    return { Url:url, Symbol:symbol, InternalSymbol:internalSymbol, Period:period, Right:right };
+}
+
+HQData.GetInternalPeriod=function(periodID)
+{
+    var MAP_PERIOD=new Map(
+        [
+            [0, 101],   //day
+            [1, 102],   //week
+            [2, 103],   //month
+
+            [4, 1],    //1min
+            [5, 5],    //5min
+            [6, 15],   //15min
+            [7, 30],   //30min
+            [8, 60],   //60min
+        ]
+    );
+
+    return MAP_PERIOD.get(periodID);
+}
+
+HQData.GetInternalRight=function(right)
+{
+    if (right==0) return 0;
+    else if (right==1) return 1;
+    else return 2;
+}
+
+HQData.IsEnableRight=function(period, symbol)   //是否支持复权
+{
+    var symbolUpper=symbol.toUpperCase();
+    if (HQChart.Chart.MARKET_SUFFIX_NAME.IsSHSZStockA(symbolUpper)) return true;
+
+    if (HQChart.Chart.MARKET_SUFFIX_NAME.IsHK(symbolUpper))
+    {
+        var indexList=new Set
+        (
+            ["HSI.HK"]
+        );
+
+        if (indexList.has(symbolUpper)) return false; //指数不支持复权
+
+        return true;
+    }
+
+    if (HQChart.Chart.MARKET_SUFFIX_NAME.IsUSA(symbolUpper))
+    {
+        var indexList=new Set
+        (
+            ["DJIA.USA", "SPX.USA", "NDX.USA"]
+        );
+
+        if (indexList.has(symbolUpper)) return false; //指数不支持复权
+
+        return true;
+    }
+
+    return false;
+}
+
+HQData.RequestFlowCapitalData=function(data,callback)
+{
+    data.PreventDefault=true;
+    var hqChartData={code:0, stock:[]}; //如果没有数据就填空
+	
+	if (data.Self.IsDestroy==false)
+	{
+		callback(hqChartData);
+	}
+}
+
+HQData.RequestHistoryData=function(data, callback)
+{
+    data.PreventDefault=true;
+    var symbol=data.Request.Data.symbol; //请求的股票代码
+    var period=data.Self.Period;    //周期
+    var right=data.Self.Right;      //复权
+
+    console.log(`[HQData::RequestHistoryData] Symbol=${symbol}`);
+    var obj=HQData.GetKLineApiUrl(symbol,period, right, null);
+
+    $.ajax(
+    {
+        url: obj.Url,
+        type: "GET",
+        success:function(recvData) 
+        {
+            HQData.RecvHistoryData(recvData, callback, { Data:data, Obj:obj });                 
+        }
+    });
+
+}
+
+HQData.RecvHistoryData=function(recvData, callback, option)
+{
+    var data=recvData.data;
+
+    var hqChartData={code:0, data:[]};
+    hqChartData.symbol=option.Obj.Symbol;
+    hqChartData.name=data.name;
+
+    var yClose=data.preKPrice;;
+    for(var i=0;i<data.klines.length; ++i)
+    {
+        var strItem=data.klines[i];
+        var item=strItem.split(',');
+        var today = new Date(Date.parse(item[0]));  
+        var date=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
+       
+        var open=parseFloat(item[1]);
+        var close=parseFloat(item[2]);
+        var high=parseFloat(item[3]);
+        var low=parseFloat(item[4]);
+        var vol=parseFloat(item[5])*100;
+        var amount=parseFloat(item[6]);
+
+        var newItem=[ date, yClose, open, high, low, close, vol, amount];
+        hqChartData.data.push(newItem);
+
+        yClose=close;
+    }
+
+
+    if (option.Data.Self.IsDestroy==false)
+	{
+        console.log("[HQData.RecvHistoryData] hqchartData ", hqChartData)
+		callback(hqChartData);
+    }
+}
+
+HQData.RequestRealtimeData=function(data, callback)
+{
+    data.PreventDefault=true;
+    var symbol=data.Request.Data.symbol[0];     //请求的股票代码
+    var period=data.Self.Period;    //周期
+    var right=data.Self.Right;      //复权
+    var dateRange=data.Self.ChartPaint[0].Data.GetDateRange();
+
+    var option={ Update:true };
+    if (dateRange && dateRange.End && dateRange.End.Date>0) option.End=dateRange.End.Date;
+
+    console.log(`[HQData::RequestRealtimeData] Symbol=${symbol}`);
+    var obj=HQData.GetKLineApiUrl(symbol,period, right, option);
+
+    $.ajax(
+    {
+        url: obj.Url,
+        type: "GET",
+        success:function(recvData) 
+        {
+            HQData.RecvRealtimeData(recvData, callback, { Data:data, Obj:obj });                 
+        }
+    });
+}
+
+HQData.RecvRealtimeData=function(recvData, callback, option)
+{
+    var data=recvData.data;
+    var stock={symbol:option.Obj.Symbol, name:data.name };
+    
+    var yClose=data.preKPrice;
+    for(var i=0;i<data.klines.length; ++i)
+    {
+        var strItem=data.klines[i];
+        var item=strItem.split(',');
+        var today = new Date(Date.parse(item[0]));  
+        var date=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
+       
+        var open=parseFloat(item[1]);
+        var close=parseFloat(item[2]);
+        var high=parseFloat(item[3]);
+        var low=parseFloat(item[4]);
+        var vol=parseFloat(item[5])*100;
+        var amount=parseFloat(item[6]);
+
+        stock.yclose=yClose;
+        stock.open=open;
+        stock.high=high;
+        stock.low=low;
+        stock.price=close;
+        stock.vol=vol;
+        stock.amount=amount;
+        stock.date=date;
+
+        yClose=close;
+    }
+
+    var hqchartData={code:0, stock:[stock] };
+
+    if (option.Data.Self.IsDestroy==false)
+	{
+        console.log("[HQData.RecvRealtimeData] hqchartData ", hqchartData)
+		callback(hqchartData);
+    }
+}
+
+HQData.RequestHistoryMinuteData=function(data, callback)
+{
+    data.PreventDefault=true;
+    var symbol=data.Request.Data.symbol; //请求的股票代码
+    var period=data.Self.Period;    //周期
+    var right=data.Self.Right;      //复权
+
+    console.log(`[HQData::RequestHistoryMinuteData] Symbol=${symbol}`);
+    var obj=HQData.GetMinuteKLineApiUrl(symbol,period, right, null);
+
+    $.ajax(
+    {
+        url: obj.Url,
+        type: "GET",
+        success:function(recvData) 
+        {
+            HQData.RecvHistoryMinuteData(recvData, callback, { Data:data, Obj:obj });                 
+        }
+    });
+
+}
+
+HQData.RecvHistoryMinuteData=function(recvData, callback, option)
+{
+    var data=recvData.data;
+
+    var hqChartData={code:0, data:[]};
+    hqChartData.symbol=option.Obj.Symbol;
+    hqChartData.name=data.name;
+
+    var yClose=data.preKPrice;;
+    for(var i=0;i<data.klines.length; ++i)
+    {
+        var strItem=data.klines[i];
+        var item=strItem.split(',');
+        var today = new Date(Date.parse(item[0]));  
+        var date=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
+        var time=today.getHours()*100+today.getMinutes();
+       
+        var open=parseFloat(item[1]);
+        var close=parseFloat(item[2]);
+        var high=parseFloat(item[3]);
+        var low=parseFloat(item[4]);
+        var vol=parseFloat(item[5])*100;
+        var amount=parseFloat(item[6]);
+
+        var newItem=[ date, yClose, open, high, low, close, vol, amount, time];
+        hqChartData.data.push(newItem);
+
+        yClose=close;
+    }
+
+
+    if (option.Data.Self.IsDestroy==false)
+	{
+        console.log("[HQData.RecvHistoryMinuteData] hqchartData ", hqChartData)
+		callback(hqChartData);
+    }
+}
+
+HQData.RequestMinuteRealtimeData=function(data, callback)
+{
+    data.PreventDefault=true;
+    var symbol=data.Request.Data.symbol[0];     //请求的股票代码
+    var period=data.Self.Period;    //周期
+    var right=data.Self.Right;      //复权
+    var dateRange=data.Self.ChartPaint[0].Data.GetDateRange();
+
+    var option={ Update:true };
+    if (dateRange && dateRange.End && dateRange.End.Date>0) option.End=dateRange.End.Date;
+
+    console.log(`[HQData::RequestMinuteRealtimeData] Symbol=${symbol}`);
+    var obj=HQData.GetMinuteKLineApiUrl(symbol,period, right, option);
+
+    $.ajax(
+    {
+        url: obj.Url,
+        type: "GET",
+        success:function(recvData) 
+        {
+            HQData.RecvMinuteRealtimeData(recvData, callback, { Data:data, Obj:obj });                 
+        }
+    });
+}
+
+HQData.RecvMinuteRealtimeData=function(recvData, callback, option)
+{
+    var data=recvData.data;
+    var hqChartData={code:0, data:[], ver:2.0, symbol:option.Obj.Symbol, name:data.name}; //更新数据使用2.0版本格式
+
+    var yClose=data.preKPrice;
+    for(var i=0;i<data.klines.length; ++i)
+    {
+        var strItem=data.klines[i];
+        var item=strItem.split(',');
+        var today = new Date(Date.parse(item[0]));  
+        var date=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
+        var time=today.getHours()*100+today.getMinutes();
+       
+        var open=parseFloat(item[1]);
+        var close=parseFloat(item[2]);
+        var high=parseFloat(item[3]);
+        var low=parseFloat(item[4]);
+        var vol=parseFloat(item[5])*100;
+        var amount=parseFloat(item[6]);
+
+        var newItem=[ date, yClose, open, high, low, close, vol, amount, time];
+        hqChartData.data.push(newItem);
+
+        yClose=close;
+    }
+
+    if (option.Data.Self.IsDestroy==false)
+	{
+        console.log("[HQData.RecvMinuteRealtimeData] hqchartData ", hqChartData)
+		callback(hqChartData);
+    }
 }
 
 export default
