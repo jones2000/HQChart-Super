@@ -30,6 +30,16 @@ HQChart插件对接第3方数据用例
 ![截图](/pic/hqchart_super_eastmoney_demo_1.png)
 ![截图](/pic/hqchart_super_eastmoney_demo_1.gif)
 
+## 2.对接腾讯页面数据
+### 示例源码地址
+[工程地址(hqchart_super_eastmoney_demo)](/hqchart_super_qq_demo)
+### 分时图/多日分时图/K线图实例包含市场
+1. 美股
+2. 沪深A股
+3. 港股
+### 效果图
+![截图](/pic/hqchart_super_qq_demo_1.png)
+
 
 # 启动
 npm run dev
