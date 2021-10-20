@@ -427,8 +427,19 @@ HQData.CorrectMinuteData=function(minuteData, xDatetime)
 HQData.GetInternalSymbol=function(symbol)   //HQChart内置代码转成东方财富代码
 {
     var aryData=symbol.split(".");
+    var symbolUpper=symbol.toUpperCase();
+    var arySymbol=aryData[0].split('_');
+    var market=parseInt(arySymbol[1]);
+    var internalSymbol=arySymbol[0] ;
 
-    var symbolUpper=symbol.toUpperCase()
+    if (internalSymbol.indexOf("-")>0)
+    {
+        var aryValue=internalSymbol.split('-');
+        internalSymbol=aryValue[1];
+    }
+    
+    return { Market:market, Symbol:internalSymbol };
+
     if (HQChart.Chart.MARKET_SUFFIX_NAME.IsUSA(symbolUpper))    //美股
     {
         var market= 105;

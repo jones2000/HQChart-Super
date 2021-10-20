@@ -180,6 +180,7 @@ DefaultData.GetKLineIndexMenu=function()
 
 DefaultData.GetTestSymbolMenu=function()
 {
+    //品种代码规则 ${东方财富品种代码}_${东方财富市场}.${HQChart内部市场后缀}
     var data=
     [
         {
@@ -189,43 +190,43 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: '网易',
-                    Code: 'NTES.usa'
+                    Code: 'NTES_105.usa'
                 },
                 {
                     Name: '微软',
-                    Code: 'MSFT.usa'
+                    Code: 'MSFT_105.usa'
                 },
                 {
                     Name: '亚马逊',
-                    Code: 'AMZN.usa'
+                    Code: 'AMZN_105.usa'
                 },
                 {
                     Name: '人人网',
-                    Code: 'RENN.usa'
+                    Code: 'RENN_106.usa'
                 },
                 {
                     Name: '滴滴',
-                    Code: 'DIDI.usa'
+                    Code: 'DIDI_106.usa'
                 },
                 {
                     Name: '阿里巴巴',
-                    Code: 'BABA.usa'
+                    Code: 'BABA_106.usa'
                 },
                 {
                     Name: '知乎',
-                    Code: 'ZH.usa'
+                    Code: 'ZH_106.usa'
                 },
                 {
                     Name: '道琼斯',
-                    Code: 'DJIA.usa'
+                    Code: 'DJIA_100.usa'
                 },
                 {
                     Name: '标普500',
-                    Code: 'SPX.usa'
+                    Code: 'SPX_100.usa'
                 },
                 {
                     Name: '纳斯达克',
-                    Code: 'NDX.usa'
+                    Code: 'NDX_100.usa'
                 }
             ]
         },
@@ -236,19 +237,19 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: '浦发银行',
-                    Code: '600000.sh'
+                    Code: '600000_1.sh'
                 },
                 {
                     Name: '东方财富',
-                    Code: '300059.sz'
+                    Code: '300059_0.sz'
                 },
                 {
                     Name: '上证指数',
-                    Code: '000001.sh'
+                    Code: '000001_1.sh'
                 },
                 {
                     Name: '深证成指',
-                    Code: '399001.sz'
+                    Code: '399001_0.sz'
                 }
             ]
         },
@@ -259,19 +260,19 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: '50ETF基金',
-                    Code: '510800.sh'
+                    Code: '510800_1.sh'
                 },
                 {
                     Name: '上证180ETF',
-                    Code: '510180.sh'
+                    Code: '510180_1.sh'
                 },
                 {
                     Name: '恒生ETF',
-                    Code: '159920.sz'
+                    Code: '159920_0.sz'
                 },
                 {
                     Name: '创业板50ETF',
-                    Code: '159949.sz'
+                    Code: '159949_0.sz'
                 },
             ]
         },
@@ -282,19 +283,19 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: '比亚迪股份',
-                    Code: '01211.hk'
+                    Code: '01211_116.hk'
                 },
                 {
                     Name: '招商银行',
-                    Code: '03968.hk'
+                    Code: '03968_116.hk'
                 },
                 {
                     Name: '汇丰控股',
-                    Code: '00005.hk'
+                    Code: '00005_116.hk'
                 },
                 {
                     Name: '恒生指数',
-                    Code: 'HSI.hk'
+                    Code: 'HSI_100.hk'
                 }
             ]
         },
@@ -305,23 +306,23 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: '美元兑加元',
-                    Code: 'USDCAD.FOREX'
+                    Code: 'USDCAD_119.FOREX'
                 },
                 {
                     Name: '美元兑港币',
-                    Code: 'USDHKD.FOREX'
+                    Code: 'USDHKD_119.FOREX'
                 },
                 {
                     Name: '美元兑欧元',
-                    Code: 'USDEUR.FOREX'
+                    Code: 'USDEUR_119.FOREX'
                 },
                 {
                     Name: '欧元兑英镑',
-                    Code: 'EURGBP.FOREX'
+                    Code: 'EURGBP_119.FOREX'
                 },
                 {
                     Name: '美元指数',
-                    Code: 'UDI.ET'
+                    Code: 'UDI_100.ET'
                 }
             ]
         },
@@ -332,67 +333,67 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                 Name: '沪铜主力',
-                Code: 'CUM.SHFE'
+                Code: 'CUM_113.SHFE'
                 },
                 {
                 Name: '沪锡主力',
-                Code: 'SNM.SHFE'
+                Code: 'SNM_113.SHFE'
                 },
                 {
                 Name: '沪金主力',
-                Code: 'AUM.SHFE'
+                Code: 'AUM_113.SHFE'
                 },
                 {
                 Name: '沪镍主力',
-                Code: 'NIM.SHFE'
+                Code: 'NIM_113.SHFE'
                 },
                 {
                 Name: '橡胶主力',
-                Code: 'RUM.SHFE'
+                Code: 'RUM_113.SHFE'
                 },
                 {
                 Name: '螺纹钢主力',
-                Code: 'RBM.SHFE'
+                Code: 'RBM_113.SHFE'
                 },
                 {
                 Name: '沪银主力',
-                Code: 'AGM.SHFE'
+                Code: 'AGM_113.SHFE'
                 },
                 {
                 Name: '线材主力',
-                Code: 'WRM.SHFE'
+                Code: 'WRM_113.SHFE'
                 },
                 {
                 Name: '沪铅主力',
-                Code: 'PBM.SHFE'
+                Code: 'PBM_113.SHFE'
                 },
                 {
                 Name: '沪锌主力',
-                Code: 'ZNM.SHFE'
+                Code: 'ZNM_113.SHFE'
                 },
                 {
                 Name: '石油沥青主力',
-                Code: 'BUM.SHFE'
+                Code: 'BUM_113.SHFE'
                 },
                 {
                 Name: '沪铝主力',
-                Code: 'ALM.SHFE'
+                Code: 'ALM_113.SHFE'
                 },
                 {
                 Name: '燃油主力',
-                Code: 'FUM.SHFE'
+                Code: 'FUM_113.SHFE'
                 },
                 {
                 Name: '热轧卷板主力',
-                Code: 'HCM.SHFE'
+                Code: 'HCM_113.SHFE'
                 },
                 {
                 Name: '纸浆主力',
-                Code: 'SPM.SHFE'
+                Code: 'SPM_113.SHFE'
                 },
                 {
                 Name: '不锈钢主力',
-                Code: 'SSM.SHFE'
+                Code: 'SSM_113.SHFE'
                 }
             ]
         },
@@ -402,20 +403,20 @@ DefaultData.GetTestSymbolMenu=function()
             Sub: 
             [
                 {
-                Name: '原油主力',
-                Code: 'SCM.SHFE'
+                    Name: '原油主力',
+                    Code: 'SCM_142.SHFE'
                 },
                 {
-                Name: '20号胶主力',
-                Code: 'NRM.SHFE'
+                    Name: '20号胶主力',
+                    Code: 'NRM_142.SHFE'
                 },
                 {
-                Name: '低硫燃油主力',
-                Code: 'LUM.SHFE'
+                    Name: '低硫燃油主力',
+                    Code: 'LUM_142.SHFE'
                 },
                 {
-                Name: '国际铜主力',
-                Code: 'BCM.SHFE'
+                    Name: '国际铜主力',
+                    Code: 'BCM_142.SHFE'
                 }
             ]
         },
@@ -426,89 +427,89 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                 Name: '玉米主力',
-                Code: 'CM.DCE'
+                Code: 'CM_114.DCE'
                 },
                 {
                 Name: '豆一主力',
-                Code: 'AM.DCE'
+                Code: 'AM_114.DCE'
                 },
                 {
                 Name: '豆二主力',
-                Code: 'BM.DCE'
+                Code: 'BM_114.DCE'
                 },
                 {
                 Name: '豆粕主力',
-                Code: 'MM.DCE'
+                Code: 'MM_114.DCE'
                 },
                 {
                 Name: '豆油主力',
-                Code: 'YM.DCE'
+                Code: 'YM_114.DCE'
                 },
                 {
                 Name: '棕榈油主力',
-                Code: 'PM.DCE'
+                Code: 'PM_114.DCE'
                 },
                 {
                 Name: '聚乙烯主力',
-                Code: 'LM.DCE'
+                Code: 'LM_114.DCE'
                 },
                 {
                 Name: '聚氯乙烯主力',
-                Code: 'VM.DCE'
+                Code: 'VM_114.DCE'
                 },
 
                 {
                 Name: '焦炭主力',
-                Code: 'JM.DCE'
+                Code: 'JM_114.DCE'
                 },
                 {
                 Name: '焦煤主力',
-                Code: 'JMM.DCE'
+                Code: 'JMM_114.DCE'
                 },
                 {
                 Name: '纤维板主力',
-                Code: 'FBM.DCE'
+                Code: 'FBM_114.DCE'
                 },
                 {
                 Name: '胶合板主力',
-                Code: 'BBM.DCE'
+                Code: 'BBM_114.DCE'
                 },
                 {
                 Name: '铁矿石主力',
-                Code: 'IM.DCE'
+                Code: 'IM_114.DCE'
                 },
                 {
                 Name: '鸡蛋主力',
-                Code: 'JDM.DCE'
+                Code: 'JDM_114.DCE'
                 },
 
                 {
                 Name: '聚丙烯主力',
-                Code: 'PPM.DCE'
+                Code: 'PPM_114.DCE'
                 },
                 {
                 Name: '玉米淀粉主力',
-                Code: 'CSM.DCE'
+                Code: 'CSM_114.DCE'
                 },
                 {
                 Name: '乙二醇主力',
-                Code: 'EGM.DCE'
+                Code: 'EGM_114.DCE'
                 },
                 {
                 Name: '粳米主力',
-                Code: 'RRM.DCE'
+                Code: 'RRM_114.DCE'
                 },
                 {
                 Name: '苯乙烯主力',
-                Code: 'EBM.DCE'
+                Code: 'EBM_114.DCE'
                 },
                 {
                 Name: 'LPG主力',
-                Code: 'PGM.DCE'
+                Code: 'PGM_114.DCE'
                 },
                 {
                 Name: '生猪主力',
-                Code: 'LHM.DCE'
+                Code: 'LHM_114.DCE'
                 }
             ]
         },
@@ -519,95 +520,95 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: '强麦主力',
-                    Code: 'WHM.CZC'
+                    Code: 'WHM_115.CZC'
                 },
                 {
                     Name: '普麦主力',
-                    Code: 'PMM.CZC'
+                    Code: 'PMM_115.CZC'
                 },
                 {
                     Name: '一号棉花主力',
-                    Code: 'CFM.CZC'
+                    Code: 'CFM_115.CZC'
                 },
                 {
                     Name: '白糖主力',
-                    Code: 'SRM.CZC'
+                    Code: 'SRM_115.CZC'
                 },
                 {
                     Name: 'PTA主力',
-                    Code: 'TAM.CZC'
+                    Code: 'TAM_115.CZC'
                 },
                 {
                     Name: '菜油主力',
-                    Code: 'OIM.CZC'
+                    Code: 'OIM_115.CZC'
                 },
                 {
                     Name: '早籼稻主力',
-                    Code: 'RIM.CZC'
+                    Code: 'RIM_115.CZC'
                 },
                 {
                     Name: '甲醇主力',
-                    Code: 'MAM.CZC'
+                    Code: 'MAM_115.CZC'
                 },
                 {
                     Name: '玻璃主力',
-                    Code: 'FGM.CZC'
+                    Code: 'FGM_115.CZC'
                 },
                 {
                     Name: '菜籽主力',
-                    Code: 'RSM.CZC'
+                    Code: 'RSM_115.CZC'
                 },
                 {
                     Name: '菜粕主力',
-                    Code: 'RMM.CZC'
+                    Code: 'RMM_115.CZC'
                 },
                 {
                     Name: '粳稻主力',
-                    Code: 'JRM.CZC'
+                    Code: 'JRM_115.CZC'
                 },
                 {
                     Name: '晚籼稻主力',
-                    Code: 'LRM.CZC'
+                    Code: 'LRM_115.CZC'
                 },
                 {
                     Name: '硅铁主力',
-                    Code: 'SFM.CZC'
+                    Code: 'SFM_115.CZC'
                 },
                 {
                     Name: '锰硅主力',
-                    Code: 'SMM.CZC'
+                    Code: 'SMM_115.CZC'
                 },
                 {
                     Name: '动力煤主力',
-                    Code: 'ZCM.CZC'
+                    Code: 'ZCM_115.CZC'
                 },
                 {
                     Name: '棉纱主力',
-                    Code: 'CYM.CZC'
+                    Code: 'CYM_115.CZC'
                 },
                 {
                     Name: '苹果主力',
-                    Code: 'APM.CZC'
+                    Code: 'APM_115.CZC'
                 },
                 {
                     Name: '红枣主力',
-                    Code: 'CJM.CZC'
+                    Code: 'CJM_115.CZC'
                 },
                 {
                     Name: '尿素主力',
-                    Code: 'URM.CZC'
+                    Code: 'URM_115.CZC'
                 },
                 {
                     Name: '纯碱主力',
-                    Code: 'SAM.CZC'
+                    Code: 'SAM_115.CZC'
                 },
                 {
                     Name: '短纤主力',
-                    Code: 'PFM.CZC'
+                    Code: 'PFM_115.CZC'
                 },
                 {
                     Name: '花生主力',
-                    Code: 'PKM.CZC'
+                    Code: 'PKM_115.CZC'
                 },
             ]
         },
@@ -618,27 +619,27 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: '二债主力',
-                    Code: 'TS_130130.CFE'
+                    Code: 'TS-130130_8.CFE'
                 },
                 {
                     Name: '五债主力',
-                    Code: 'TF_050130.CFE'
+                    Code: 'TF-050130_8.CFE'
                 },
                 {
                     Name: '十债主力',
-                    Code: 'T_110130.CFE'
+                    Code: 'T-110130_8.CFE'
                 },
                 {
                     Name: '上证主力',
-                    Code: 'IH_070130.CFE'
+                    Code: 'IH-070130_8.CFE'
                 },
                 {
                     Name: '中证主力',
-                    Code: 'IC_060130.CFE'
+                    Code: 'IC-060130_8.CFE'
                 },
                 {
                     Name: '沪深主力',
-                    Code: 'IF_040130.CFE'
+                    Code: 'IF-040130_8.CFE'
                 }
             ]
         },
@@ -649,77 +650,77 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: '小麦当月连续',
-                    Code: 'ZW00Y.CBOT'
+                    Code: 'ZW00Y_103.CBOT'
                 },
                 {
                     Name: '迷你小麦当月连续',
-                    Code: 'XW00Y.CBOT'
+                    Code: 'XW00Y_103.CBOT'
                 },
                 {
                     Name: '玉米当月连续',
-                    Code: 'ZC00Y.CBOT'
+                    Code: 'ZC00Y_103.CBOT'
                 },
                 {
                     Name: '迷你玉米当月连续',
-                    Code: 'XC00Y.CBOT'
+                    Code: 'XC00Y_103.CBOT'
                 },
                 {
                     Name: '大豆当月连续',
-                    Code: 'ZS00Y.CBOT'
+                    Code: 'ZS00Y_103.CBOT'
                 },
                 {
                     Name: '迷你大豆当月连续',
-                    Code: 'XK00Y.CBOT'
+                    Code: 'XK00Y_103.CBOT'
                 },
                 {
                     Name: '豆油当月连续',
-                    Code: 'ZL00Y.CBOT'
+                    Code: 'ZL00Y_103.CBOT'
                 },
                 {
                     Name: '豆粕当月连续',
-                    Code: 'ZM00Y.CBOT'
+                    Code: 'ZM00Y_103.CBOT'
                 },
                 {
                     Name: '燕麦当月连续',
-                    Code: 'ZO00Y.CBOT'
+                    Code: 'ZO00Y_103.CBOT'
                 },
                 {
                     Name: '稻谷当月连续',
-                    Code: 'ZR00Y.CBOT'
+                    Code: 'ZR00Y_103.CBOT'
                 },
 
                 {
                     Name: '小型纳指当月连续',
-                    Code: 'NQ00Y.CBOT'
+                    Code: 'NQ00Y_103.CBOT'
                 },
                 {
                     Name: '小型标普当月连续',
-                    Code: 'ES00Y.CBOT'
+                    Code: 'ES00Y_103.CBOT'
                 },
                 {
                     Name: '小型道指当月连续',
-                    Code: 'YM00Y.CBOT'
+                    Code: 'YM00Y_103.CBOT'
                 },
                 
                 {
                     Name: '2年美国债当月连续',
-                    Code: 'TU00Y.CBOT'
+                    Code: 'TU00Y_103.CBOT'
                 },
                 {
                     Name: '5年美国债当月连续',
-                    Code: 'FV00Y.CBOT'
+                    Code: 'FV00Y_103.CBOT'
                 },
                 {
                     Name: '10年美国债当月连续',
-                    Code: 'TY00Y.CBOT'
+                    Code: 'TY00Y_103.CBOT'
                 },
                 {
                     Name: '30年美国债当月连续',
-                    Code: 'US00Y.CBOT'
+                    Code: 'US00Y_103.CBOT'
                 },
                 {
                     Name: '超国债当月连续',
-                    Code: 'UL00Y.CBOT'
+                    Code: 'UL00Y_103.CBOT'
                 },
             ]
         },
@@ -730,35 +731,35 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: 'NYMEX原油',
-                    Code: 'CL00Y.NYMEX'
+                    Code: 'CL00Y_102.NYMEX'
                 },
                 {
                     Name: 'NYMEX铂金',
-                    Code: 'PL00Y.NYMEX'
+                    Code: 'PL00Y_102.NYMEX'
                 },
                 {
                     Name: '迷你原油',
-                    Code: 'QM00Y.NYMEX'
+                    Code: 'QM00Y_102.NYMEX'
                 },
                 {
                     Name: 'NYMEX燃油',
-                    Code: 'HO00Y.NYMEX'
+                    Code: 'HO00Y_102.NYMEX'
                 },
                 {
                     Name: 'NYMEX汽油',
-                    Code: 'RB00Y.NYMEX'
+                    Code: 'RB00Y_102.NYMEX'
                 },
                  {
                     Name: 'NYMEX钯金',
-                    Code: 'PA00Y.NYMEX'
+                    Code: 'PA00Y_102.NYMEX'
                 },
                 {
                     Name: '热轧钢卷',
-                    Code: 'HR00Y.NYMEX'
+                    Code: 'HR00Y_102.NYMEX'
                 },
                 {
                     Name: '天然气',
-                    Code: 'NG00Y.NYMEX'
+                    Code: 'NG00Y_102.NYMEX'
                 },
             ]
         },
@@ -769,27 +770,27 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: 'COMEX白银',
-                    Code: 'SI00Y.COMEX'
+                    Code: 'SI00Y_101.COMEX'
                 },
                 {
                     Name: '迷你白银',
-                    Code: 'QI00Y.COMEX'
+                    Code: 'QI00Y_101.COMEX'
                 },
                 {
                     Name: '微型黄金',
-                    Code: 'MGC00Y.COMEX'
+                    Code: 'MGC00Y_101.COMEX'
                 },
                 {
                     Name: '迷你黄金',
-                    Code: 'QO00Y.COMEX'
+                    Code: 'QO00Y_101.COMEX'
                 },
                 {
                     Name: 'COMEX黄金',
-                    Code: 'GC00Y.COMEX'
+                    Code: 'GC00Y_101.COMEX'
                 },
                 {
                     Name: 'COMEX铜',
-                    Code: 'HG00Y.COMEX'
+                    Code: 'HG00Y_101.COMEX'
                 }
             ]
         },
@@ -800,7 +801,7 @@ DefaultData.GetTestSymbolMenu=function()
             [
                  {
                     Name: '棉花当月连续',
-                    Code: 'CT00Y.NYBOT'
+                    Code: 'CT00Y_108.NYBOT'
                 },
             ]
         },
@@ -811,27 +812,27 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: '综合镍03',
-                    Code: 'NI_LNKT.LME'
+                    Code: 'NI-LNKT_109.LME'
                 },
                 {
                     Name: '综合铜03',
-                    Code: 'CA_LCPT.LME'
+                    Code: 'CA-LCPT_109.LME'
                 },
                 {
                     Name: '综合铝03',
-                    Code: 'AH_LALT.LME'
+                    Code: 'AH-LALT_109.LME'
                 },
                 {
                     Name: '综合锡03',
-                    Code: 'SN_LTNT.LME'
+                    Code: 'SN-LTNT_109.LME'
                 },
                 {
                     Name: '综合锌03',
-                    Code: 'ZS_LZNT.LME'
+                    Code: 'ZS-LZNT_109.LME'
                 },
                 {
                     Name: '综合铅03',
-                    Code: 'PB_LLDT.LME'
+                    Code: 'PB-LLDT_109.LME'
                 },
             ]
         },
@@ -842,31 +843,31 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: '日铂金当月连续',
-                    Code: 'JPL00Y.TOCOM'
+                    Code: 'JPL00Y_111.TOCOM'
                 },
                 {
                     Name: '日白银当月连续',
-                    Code: 'JAG00Y.TOCOM'
+                    Code: 'JAG00Y_111.TOCOM'
                 },
                 {
                     Name: '日原油当月连续',
-                    Code: 'JCO00Y.TOCOM'
+                    Code: 'JCO00Y_111.TOCOM'
                 },
                 {
                     Name: '日煤油当月连续',
-                    Code: 'JKE00Y.TOCOM'
+                    Code: 'JKE00Y_111.TOCOM'
                 },
                 {
                     Name: '日橡胶当月连续',
-                    Code: 'JRU00Y.TOCOM'
+                    Code: 'JRU00Y_111.TOCOM'
                 },
                 {
                     Name: '日黄金当月连续',
-                    Code: 'JAU00Y.TOCOM'
+                    Code: 'JAU00Y_111.TOCOM'
                 },
                 {
                     Name: '日汽油当月连续',
-                    Code: 'JGL00Y.TOCOM'
+                    Code: 'JGL00Y_111.TOCOM'
                 },
             ]
         },
@@ -877,11 +878,11 @@ DefaultData.GetTestSymbolMenu=function()
             [
                 {
                     Name: '布伦特原油当月连续',
-                    Code: 'B00Y.IPE'
+                    Code: 'B00Y_112.IPE'
                 },
                 {
                     Name: '重柴油当月连续',
-                    Code: 'G00Y.IPE'
+                    Code: 'G00Y_112.IPE'
                 },
             ]
         },
@@ -978,6 +979,7 @@ DefaultData.GetKLinePeriodMenu=function()
         {Name:"周线", ID: 1 },
         {Name:"月线", ID: 2 },
 
+        //{Name:"1分钟", ID: 4 },
         {Name:"5分钟", ID: 5 },
         {Name:"15分钟", ID: 6 },
         {Name:"30分钟", ID: 7 },
@@ -1019,7 +1021,7 @@ export default
             MinuteIndexMenu: DefaultData.GetMinuteIndexMenu(),
             KLineIndexMenu: DefaultData.GetKLineIndexMenu(),
 
-            Symbol:'AAPL.usa',      //HQChart内部编码美股加后缀.usa AAPL.usa
+            Symbol:'AAPL_105.usa',      //HQChart内部编码美股加后缀.usa AAPL.usa
             Chart:null,             //图形控件  分时图
             KLineChart:null,        //图形控件  K线图
             NavMenuAry: DefaultData.GetTestSymbolMenu(),
