@@ -1,0 +1,82 @@
+<view class="changeType" bindtap="popup" data-position="right">
+  <mp-icon icon="setting" color="black" size="{{15}}"></mp-icon>
+  切换品种
+</view>
+<view class="borderHor"></view>
+<view class="btnGroup">
+  <view class="btn {{isShowMinuteChart === true ? 'active' : ''}}" data-type='minutetype' bind:tap="ChangeChartType">走势图</view>
+  <view class="btn {{!isShowMinuteChart === true ? 'active' : ''}}" data-type='klinetype' bind:tap="ChangeChartType">K线图</view>
+</view>
+
+<view class="minuteWrap" wx:if="{{isShowMinuteChart}}">
+  <view class="btnGroup">
+    <view class="btn {{indexMinute === index ? 'active': ''}}" wx:for="{{minuteDayCountAry}}" wx:key="item" data-index='{{index}}' data-id='{{item.ID}}' bind:tap="ChangeMinuteDayCount">{{item.Name}}</view>
+  </view>
+  <canvas 
+    type="2d"
+    id="hqchart_minute"  
+    style="width:{{Width}}px; height:{{Height}}px;"
+    bindtouchstart='MinuteTouchStart' 
+    bindtouchmove='MinuteTouchMove' 
+    bindtouchend='MinuteTouchEnd' 
+    hidden='{{!isShowMinuteChart}}'
+    ></canvas>
+  <view class="btnGroup">
+    <view class="btn {{minuteIndexNumber === index ? 'active' : ''}}" wx:for="{{minuteIndexAry}}" wx:key="mIndex" data-index='{{index}}' data-id='{{item.ID}}' data-windowIndex="{{item.WindowIndex}}" bind:tap="ChangeMinuteIndex">{{item.Name}}</view>
+  </view>
+</view>
+
+<view class="klineWrap" wx:else>
+  <view class="periodRightWrap">
+    <view class="btnGroup periodWrap">
+      <view class="btn {{indexKPeriod === idx ? 'active': ''}}" data-index='{{idx}}' data-id='{{period.ID}}' bind:tap="ChangekPeriod" wx:for="{{kPeriodAry}}" wx:key="period" wx:for-index="idx" wx:for-item="period">{{period.Name}}</view>
+      <view class="btn {{indexPeroid !== -1 ? 'active' : ''}}">
+        <picker bindchange="bindPeriodChange" value="{{indexPeroid}}" range-key='{{"Name"}}' range="{{kMPeriodAry}}">
+          <view class="picker">
+            {{indexPeroid == -1 ? '分钟' : kMPeriod.Name}}
+          </view>
+        </picker>
+      </view>
+    </view>  
+    <view class="btnGroup rightWrap" wx:if="{{isShowRight}}">
+      <view class="btn active">
+        <picker bindchange="bindRightChange" value="{{indexRight}}" range-key='{{"Name"}}' range="{{rightAry}}">
+          <view class="picker">
+            {{rightAry[indexRight].Name}}
+          </view>
+        </picker>
+      </view>
+    </view>  
+  </view>
+  <canvas 
+    type="2d"
+    id="hqchart_kline"  
+    style="width:{{Width}}px; height:{{Height}}px;"
+    bindtouchstart='KLineTouchStart' 
+    bindtouchmove='KLineTouchMove' 
+    bindtouchend='KLineTouchEnd' 
+    hidden='{{isShowMinuteChart}}'></canvas>
+  <view class="btnGroup">
+    <view class="btn {{KlineIndexNumber === kIndex ? 'active' : ''}}" wx:for="{{KlineIndexAry}}" wx:key="kIndex" data-index='{{kIndex}}' data-id='{{item.ID}}' data-windowIndex="{{item.WindowIndex}}" wx:for-index="kIndex" bind:tap="ChangeKlineIndex">{{item.Name}}</view>
+  </view>
+</view>
+
+<page-container 
+  show="{{show}}"
+  round="{{round}}"
+  overlay="{{overlay}}"
+  duration="{{duration}}"
+  position="{{position}}"
+  close-on-slide-down="{{false}}"
+  bindbeforeenter="onBeforeEnter"
+  bindenter="onEnter"
+  bindafterenter="onAfterEnter"
+  bindbeforeleave="onBeforeLeave"
+  bindleave="onLeave"
+  bindafterleave="onAfterLeave"
+  bindclickoverlay="onClickOverlay"
+  custom-style="{{customStyle}}"
+  overlay-style="{{overlayStyle}}"
+>
+  <select-stock-type bind:ChangeSymbol='ChangeSymbol'></select-stock-type>
+</page-container>

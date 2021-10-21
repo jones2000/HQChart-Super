@@ -1,0 +1,9 @@
+<!-- tabList组件 -->
+<!-- enable-flex开启flex -->
+<scroll-view scroll-x enable-flex scroll-with-animation class="tab_list {{boxClassName}}"
+  style="background-color: {{background}};height: {{height}}rpx; line-height: {{height}}rpx;font-size: {{fonntSize}}rpx;color: {{color}}">
+  <view class="tab_item {{currentIndex === index ? 'active' : ''}} {{activeStyle != '' ? 'whiteBg' : ''}}" bindtap="changeTab" data-index="{{index}}" data-idname="{{idname+index}}" wx:for="{{tabList}}" wx:for-item="tab" wx:key="tab">
+    {{tab}}
+    <view class="bottomLine"></view>
+  </view>
+</scroll-view>

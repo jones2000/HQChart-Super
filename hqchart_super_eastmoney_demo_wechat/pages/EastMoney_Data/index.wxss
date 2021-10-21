@@ -1,0 +1,61 @@
+    /**index.wxss**/
+.changeType{
+  height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1rpx solid #ededed;
+  border-bottom: 1rpx solid #ededed;
+  box-sizing: border-box;
+}
+
+.borderHor{
+  height: 20rpx;
+  background-color: #f2f2f2;
+}
+
+.btnGroup{
+  border-top: 1rpx solid #ededed;
+  border-bottom: 1rpx solid #ededed;
+  height: 70rpx;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.btnGroup .btn {
+  flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1rpx solid #ededed;
+}
+
+.btnGroup .btn:last-child{
+  border-right: none;
+}
+
+.btnGroup .btn.active {
+  color: rgb(79, 79, 241);
+}
+
+.periodRightWrap{
+  display: flex;
+  justify-content: space-between;
+  border-top: 1rpx solid #ededed;
+  border-bottom: 1rpx solid #ededed;
+}
+
+.periodWrap{
+  width: 500rpx;
+  border-right: 1rpx solid #ededed;
+}
+
+.rightWrap{
+  width: 200rpx;
+  border-left: 1rpx solid #ededed;
+}
+
+.btn.active .picker {
+  color: rgb(79, 79, 241);
+}

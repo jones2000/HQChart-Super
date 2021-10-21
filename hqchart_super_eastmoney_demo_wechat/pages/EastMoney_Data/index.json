@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+   
+    "select-stock-type": "/components/selectStockType/selectStockType"
+  }
+}

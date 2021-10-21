@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "tab-list": "/components/tabList/tabList"
+  }
+}

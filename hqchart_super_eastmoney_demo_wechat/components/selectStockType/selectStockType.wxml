@@ -1,0 +1,12 @@
+<!--components/selectStockType/selectStockType.wxml-->
+<view class="box">
+  <tab-list id="tabList" boxClassName="indexTab" tabList="{{tabList}}" bindchangetab="changetab" currentIndex="{{currentTab}}"></tab-list>
+  <view class="stockList">
+    <scroll-view scroll-y="true" style="height: 100%;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+      <view class="item" wx:for="{{stockList}}" wx:key="Code" data-item='{{item}}' bind:tap="ChangeSymbol">
+        <view class="code">{{item.Code}}</view>
+        <view class="name">{{item.Name}}</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

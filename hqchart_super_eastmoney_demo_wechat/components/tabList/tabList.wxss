@@ -1,0 +1,67 @@
+/* tabList组件 */
+.tab_list {
+  display: flex;
+  font-size: 30rpx;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+.tab_list .tab_item {
+  position: relative;
+  white-space: nowrap;
+  margin-right: 70rpx;
+}
+.tab_item .bottomLine {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 20rpx;
+	height: 8rpx;
+  background-color: #fff;
+	/* background-color: #4275e7;
+	box-shadow: 0px 3px 6px 0px 
+		rgba(66, 117, 231, 0.71); */
+	border-radius: 8rpx;
+}
+
+.tab_item.active {
+  color: #4275e7;
+  /* font-size: 32rpx; */
+}
+
+.tab_item.active .bottomLine{
+  background-color: #4275e7;
+	box-shadow: 0 6rpx 12rpx 0 
+		rgba(66, 117, 231, 0.71);
+}
+
+/*白色底样式*/
+.tab_list.whiteBg .tab_item{
+  font-size: 26rpx;
+}
+
+.whiteBg .tab_item .bottomLine {
+  width: 40rpx;
+}
+
+.whiteBg .tab_item.active {
+  color: #ff1f32;
+}
+
+.whiteBg .tab_item .bottomLine{
+  background-color: #fff;
+}
+
+.whiteBg .tab_item.active .bottomLine{
+  background-color: #ff1f32;
+}
+
+.tab_list ::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.indexTab .tab_item{
+  margin-right: 50rpx;
+}

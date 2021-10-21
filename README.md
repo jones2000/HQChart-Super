@@ -6,7 +6,7 @@ HQChart插件对接第3方数据用例
 
 # 实例列表
 
-## 1.对接东方财富网页数据
+## 1.对接东方财富网页数据vue版本
 ### 示例源码地址
 [工程地址(hqchart_super_eastmoney_demo)](/hqchart_super_eastmoney_demo)
 ### 分时图/多日分时图/K线图实例包含市场
@@ -39,6 +39,31 @@ HQChart插件对接第3方数据用例
 3. 港股
 ### 效果图
 ![截图](/pic/hqchart_super_qq_demo_1.png)
+
+## 3.对接东方财富网页数据小程序版本
+### 示例源码地址
+[工程地址(hqchart_super_eastmoney_demo)](/hqchart_super_eastmoney_demo_wechat)
+### 分时图/多日分时图/K线图实例包含市场
+1. 美股
+2. 沪深A股
+3. 港股
+4. 外汇
+5. 上海期货交易所
+6. 上海国际能源交易中心
+7. 大连商品交易所
+8. 郑州商品交易所
+9. 中国金融期货交易所
+10. 芝加哥商业交易所
+11. 纽约商品交易所
+12. 纽约商业期货交易所
+13. 纽约期货交易所
+14. 伦敦金属交易所
+15. 东京商品交易所交易所
+16. 美国洲际交易所
+### 效果图
+![截图](/pic/hqchart_super_eastmoney_demo_wechat_1.PNG)
+![截图](/pic/hqchart_super_eastmoney_demo_wechat_2.PNG)
+![截图](/pic/hqchart_super_eastmoney_demo_wechat_3.PNG)
 
 
 # 启动
