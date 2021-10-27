@@ -970,7 +970,7 @@ HQData.GetForeignExchangeData=function(upperSymbol,width)
 ///////////////////////////////////////////////////////////////////////
 HQData.GetETTimeData=function(upperSymbol,minuteStringData)
 {
-    if (upperSymbol=="UDI.ET")
+    if (upperSymbol=="UDI_100.ET")
     {
         //美元指数 6:00 - 5:59
         const TIME_SPLIT=           
@@ -985,7 +985,7 @@ HQData.GetETTimeData=function(upperSymbol,minuteStringData)
 
 HQData.GetETData=function(upperSymbol)
 {
-    if (upperSymbol=="UDI.ET")
+    if (upperSymbol=="UDI_100.ET")
     {
         const data=
         {
@@ -1041,7 +1041,7 @@ HQData.GetETData=function(upperSymbol)
 HQData.GetETDecimal=function(symbol)
 {
     var upperSymbol=symbol.toUpperCase();
-    if (upperSymbol=="UDI.ET") return 2;
+    if (upperSymbol=="UDI_100.ET") return 2;
 
     return 2;
 }

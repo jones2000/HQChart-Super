@@ -943,7 +943,16 @@ DefaultData.GetKLineOption=function()
                 
         Frame:  //子框架设置
         [
-            { SplitCount:5, IsShowLeftText:false },
+            { 
+                SplitCount:5, IsShowLeftText:false,
+                Custom:
+                [
+                    { 
+                        Type:0,
+                        Position:'right',
+                    }
+                ]
+            },
             { SplitCount:3, IsShowLeftText:false },
             { SplitCount:3, IsShowLeftText:false },
         ],

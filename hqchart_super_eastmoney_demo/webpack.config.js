@@ -62,7 +62,7 @@ module.exports = (options = {}) => ({
     port: 8080,
     proxy: {
       '/eastmoney/': {
-        target: 'http://push2his.eastmoney.com',
+        target: 'https://push2his.eastmoney.com',
         changeOrigin: true,
         pathRewrite: {
           '^/eastmoney': ''
