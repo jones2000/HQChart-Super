@@ -68,6 +68,7 @@ HQChart插件对接第3方数据用例
 ## 3.对接东方财富网页数据uniapp版本
 ### 示例源码地址
 [工程地址(hqchart_super_eastmoney_demo)](/hqchart_super_eastmoney_demo_uniapp)
+**注意**需要安装2个插件，jones-hqchart2和uni-icons
 ### 分时图/多日分时图/K线图实例包含市场
 1. 美股
 2. 沪深A股
