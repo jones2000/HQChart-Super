@@ -76,6 +76,29 @@ DefaultData.GetTestSymbolMenu=function()
             ]
         },
         {
+            Title: '北交所',
+            Icon: '',
+            Sub: 
+            [
+                {
+                    Name: '凯添燃气',
+                    Code: '831010_0.bj'
+                },
+                {
+                    Name: '驱动力',
+                    Code: '838275_0.bj'
+                },
+                {
+                    Name: '齐鲁华信',
+                    Code: '830832_0.bj'
+                },
+                {
+                    Name: '苏轴股份',
+                    Code: '430418_0.bj'
+                }
+            ]
+        },
+        {
             Title: 'ETF基金',
             Icon: '',
             Sub:

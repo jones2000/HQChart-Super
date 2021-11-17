@@ -26,6 +26,7 @@ HQChart插件对接第3方数据用例
 14. 伦敦金属交易所
 15. 东京商品交易所交易所
 16. 美国洲际交易所
+17. 北交所
 ### 效果图
 ![截图](/pic/hqchart_super_eastmoney_demo_1.png)
 ![截图](/pic/hqchart_super_eastmoney_demo_1.gif)
@@ -60,6 +61,7 @@ HQChart插件对接第3方数据用例
 14. 伦敦金属交易所
 15. 东京商品交易所交易所
 16. 美国洲际交易所
+17. 北交所
 ### 效果图
 ![截图](/pic/hqchart_super_eastmoney_demo_wechat_1.PNG)
 ![截图](/pic/hqchart_super_eastmoney_demo_wechat_2.PNG)
@@ -86,6 +88,7 @@ HQChart插件对接第3方数据用例
 14. 伦敦金属交易所
 15. 东京商品交易所交易所
 16. 美国洲际交易所
+17. 北交所
 ### 效果图
 ![截图](/pic/hqchart_super_eastmoney_demo_uniapp_1.gif)
 

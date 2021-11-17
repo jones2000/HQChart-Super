@@ -36,6 +36,11 @@ HQData.SetMinuteChartCoordinate=function()
     HQChart.Chart.JSChart.GetMinuteTimeStringData().CreateSHSZData=()=>{ return HQData.CreateSHSZData(HQChart.Chart.JSChart.GetMinuteTimeStringData()); }  //替换交易时间段
     HQChart.Chart.JSChart.GetMinuteCoordinateData().GetSHSZData=(upperSymbol,width)=> { return HQData.GetSHSZData(upperSymbol,width); }    	//替换X轴刻度信息
 
+    //北交所
+    HQChart.Chart.JSChart.GetMinuteTimeStringData().CreateBJData=()=>{ return HQData.CreateSHSZData(HQChart.Chart.JSChart.GetMinuteTimeStringData()); }  //替换交易时间段
+    HQChart.Chart.JSChart.GetMinuteCoordinateData().GetBJData=(upperSymbol,width)=> { return HQData.GetSHSZData(upperSymbol,width); }    	//替换X轴刻度信息
+
+
     //港股分时图坐标
     HQChart.Chart.JSChart.GetMinuteTimeStringData().CreateHKData=()=>{ return HQData.CreateHKData(HQChart.Chart.JSChart.GetMinuteTimeStringData()); }   //替换交易时间段
     HQChart.Chart.JSChart.GetMinuteCoordinateData().GetHKData=(upperSymbol,width)=> { return HQData.GetHKData(upperSymbol,width); }    	//替换X轴刻度信息
@@ -1123,6 +1128,7 @@ HQData.IsEnableRight=function(period, symbol)   //是否支持复权
 {
     var symbolUpper=symbol.toUpperCase();
     if (HQChart.Chart.MARKET_SUFFIX_NAME.IsSHSZStockA(symbolUpper)) return true;
+    if (HQChart.Chart.MARKET_SUFFIX_NAME.IsBJStock(symbol)) return true;
 
     var aryData=symbol.split(".");
     var symbolUpper=symbol.toUpperCase();

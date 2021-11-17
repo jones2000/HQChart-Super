@@ -32,6 +32,10 @@ HQData.SetMinuteChartCoordinate=function()
     JSCommon.JSChart.GetMinuteTimeStringData().CreateSHSZData=()=>{ return HQData.CreateSHSZData(JSCommon.JSChart.GetMinuteTimeStringData()); }  //替换交易时间段
     JSCommon.JSChart.GetMinuteCoordinateData().GetSHSZData=(upperSymbol,width)=> { return HQData.GetSHSZData(upperSymbol,width); }    	//替换X轴刻度信息
 
+    //北交所分时图坐标
+    JSCommon.JSChart.GetMinuteTimeStringData().CreateBJData=()=>{ return HQData.CreateSHSZData(JSCommon.JSChart.GetMinuteTimeStringData()); }  //替换交易时间段
+    JSCommon.JSChart.GetMinuteCoordinateData().GetBJData=(upperSymbol,width)=> { return HQData.GetSHSZData(upperSymbol,width); }    	//替换X轴刻度信息
+
     //港股分时图坐标
     JSCommon.JSChart.GetMinuteTimeStringData().CreateHKData=()=>{ return HQData.CreateHKData(JSCommon.JSChart.GetMinuteTimeStringData()); }   //替换交易时间段
     JSCommon.JSChart.GetMinuteCoordinateData().GetHKData=(upperSymbol,width)=> { return HQData.GetHKData(upperSymbol,width); }    	//替换X轴刻度信息
@@ -1116,6 +1120,8 @@ HQData.IsEnableRight=function(period, symbol)   //是否支持复权
     var symbolUpper=symbol.toUpperCase();
     if (MARKET_SUFFIX_NAME.IsSHSZStockA(symbolUpper)) return true;
 
+    if (MARKET_SUFFIX_NAME.IsBJStock(symbolUpper)) return true;
+
     var aryData=symbol.split(".");
     var symbolUpper=symbol.toUpperCase();
     var arySymbol=aryData[0].split('_');
@@ -1151,10 +1157,10 @@ HQData.RequestHistoryData=function(data, callback)
 {
     data.PreventDefault=true;
     var symbol=data.Request.Data.symbol; //请求的股票代码
-    var period=data.Self.Period;    //周期
-    var right=data.Self.Right;      //复权
+    var period=data.Request.Data.period;    //周期
+    var right=data.Request.Data.right;      //复权
 
-    console.log(`[HQData::RequestHistoryData] Symbol=${symbol}`);
+    console.log(`[HQData::RequestHistoryData] Symbol=${symbol} period=${period} right=${right}`);
     var obj=HQData.GetKLineApiUrl(symbol,period, right, null);
 
     wx.request(
@@ -1210,14 +1216,14 @@ HQData.RequestRealtimeData=function(data, callback)
 {
     data.PreventDefault=true;
     var symbol=data.Request.Data.symbol[0];     //请求的股票代码
-    var period=data.Self.Period;    //周期
-    var right=data.Self.Right;      //复权
+    var period=data.Request.Data.period;    //周期
+    var right=data.Request.Data.right;      //复权
     var dateRange=data.Self.ChartPaint[0].Data.GetDateRange();
 
     var option={ Update:true };
     if (dateRange && dateRange.End && dateRange.End.Date>0) option.End=dateRange.End.Date;
 
-    console.log(`[HQData::RequestRealtimeData] Symbol=${symbol}`);
+    console.log(`[HQData::RequestRealtimeData] Symbol=${symbol} period=${period} right=${right}`);
     var obj=HQData.GetKLineApiUrl(symbol,period, right, option);
 
     wx.request(
@@ -1276,10 +1282,10 @@ HQData.RequestHistoryMinuteData=function(data, callback)
 {
     data.PreventDefault=true;
     var symbol=data.Request.Data.symbol; //请求的股票代码
-    var period=data.Self.Period;    //周期
-    var right=data.Self.Right;      //复权
+    var period=data.Request.Data.period;    //周期
+    var right=data.Request.Data.right;      //复权
 
-    console.log(`[HQData::RequestHistoryMinuteData] Symbol=${symbol}`);
+    console.log(`[HQData::RequestHistoryMinuteData] Symbol=${symbol} period=${period} right=${right}`);
     var obj=HQData.GetMinuteKLineApiUrl(symbol,period, right, null);
 
     wx.request(
@@ -1336,14 +1342,14 @@ HQData.RequestMinuteRealtimeData=function(data, callback)
 {
     data.PreventDefault=true;
     var symbol=data.Request.Data.symbol[0];     //请求的股票代码
-    var period=data.Self.Period;    //周期
-    var right=data.Self.Right;      //复权
+    var period=data.Request.Data.period;    //周期
+    var right=data.Request.Data.right;      //复权
     var dateRange=data.Self.ChartPaint[0].Data.GetDateRange();
 
     var option={ Update:true };
     if (dateRange && dateRange.End && dateRange.End.Date>0) option.End=dateRange.End.Date;
 
-    console.log(`[HQData::RequestMinuteRealtimeData] Symbol=${symbol}`);
+    console.log(`[HQData::RequestMinuteRealtimeData] Symbol=${symbol} period=${period} right=${right}`);
     var obj=HQData.GetMinuteKLineApiUrl(symbol,period, right, option);
 
     wx.request(

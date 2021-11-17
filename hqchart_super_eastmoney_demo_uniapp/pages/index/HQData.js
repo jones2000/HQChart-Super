@@ -11,6 +11,8 @@
    教程中所有的实例中使用的数据都来自互联网,或测试数据。仅用于学习HQChart图形使用. 教程禁止用于商业产品
 */
 
+import H5_HQChart from '@/uni_modules/jones-hqchart2/js_sdk/umychart.uniapp.h5.js'
+
 // #ifdef H5
 import HQChart from '@/uni_modules/jones-hqchart2/js_sdk/umychart.uniapp.h5.js'
 
@@ -30,6 +32,7 @@ var JSChart=JSCommon.JSChart;
 function HQData()  { }
 
 HQData.Explain="东财财富网接口";
+
 
 HQData.ChangeStyle=function()
 {
@@ -56,6 +59,10 @@ HQData.SetMinuteChartCoordinate=function()
     //A股分时图坐标
     JSChart.GetMinuteTimeStringData().CreateSHSZData=()=>{ return HQData.CreateSHSZData(JSChart.GetMinuteTimeStringData()); }  //替换交易时间段
     JSChart.GetMinuteCoordinateData().GetSHSZData=(upperSymbol,width)=> { return HQData.GetSHSZData(upperSymbol,width); }    	//替换X轴刻度信息
+	
+	//北交所分时图坐标
+	JSChart.GetMinuteTimeStringData().CreateBJData=()=>{ return HQData.CreateSHSZData(JSChart.GetMinuteTimeStringData()); }  //替换交易时间段
+	JSChart.GetMinuteCoordinateData().GetBJData=(upperSymbol,width)=> { return HQData.GetSHSZData(upperSymbol,width); }    	//替换X轴刻度信息
 
     //港股分时图坐标
     JSChart.GetMinuteTimeStringData().CreateHKData=()=>{ return HQData.CreateHKData(JSChart.GetMinuteTimeStringData()); }   //替换交易时间段
@@ -147,6 +154,10 @@ HQData.NetworkFilter=function(data, callback)
         case 'KLineChartContainer::RequestMinuteRealtimeData':          //分钟增量数据更新
             HQData.RequestMinuteRealtimeData(data,callback);
             break;
+			
+		case "JSSymbolData::GetSymbolData":				//无图形指标计算 全量K线数据
+			HQData.RequestSymbolData(data,callback);
+			break;
     }
 }
 
@@ -1150,6 +1161,7 @@ HQData.IsEnableRight=function(period, symbol)   //是否支持复权
 {
     var symbolUpper=symbol.toUpperCase();
     if (MARKET_SUFFIX_NAME.IsSHSZStockA(symbolUpper)) return true;
+	if (MARKET_SUFFIX_NAME.IsBJStock(symbolUpper)) return true;
 
     var aryData=symbol.split(".");
     var symbolUpper=symbol.toUpperCase();
@@ -1425,6 +1437,111 @@ HQData.RecvMinuteRealtimeData=function(recvData, callback, option)
         console.log("[HQData.RecvMinuteRealtimeData] hqchartData ", hqChartData);
 		HQData.InvokeCallback(hqChartData, callback);
     }
+}
+
+
+HQData.RequestSymbolData=function(data, callback)
+{
+	data.PreventDefault=true;
+	var symbol=data.Request.Data.symbol;
+	var period=data.Self.Period;    //周期
+	var right=data.Self.Right;      //复权
+	
+	console.log(`[HQData::RequestSymbolData] Symbol=${symbol} Period=${period} Right=${right}`);
+	
+	if (H5_HQChart.ChartData.IsDayPeriod(period, true))	//日K
+	{
+		var obj=HQData.GetKLineApiUrl(symbol,period, right, null);
+		
+		wx.request(
+		{
+		    url: obj.Url,
+		    type: "GET",
+		    success:function(recvData) 
+		    {
+		        HQData.RecvSymbolData_Day(recvData.data, callback, { Data:data, Obj:obj });                 
+		    }
+		});
+	}
+	else if (H5_HQChart.ChartData.IsMinutePeriod(period, true))	//分钟K
+	{
+		var obj=HQData.GetMinuteKLineApiUrl(symbol,period, right, null);
+		
+		wx.request(
+		{
+		    url: obj.Url,
+		    type: "GET",
+		    success:function(recvData) 
+		    {
+		        HQData.RecvSymbolData_Minute(recvData.data, callback, { Data:data, Obj:obj });                 
+		    }
+		});
+	}
+}
+
+HQData.RecvSymbolData_Day=function(recvData, callback, option)	//日K
+{
+	var data=recvData.data;
+	
+	var hqChartData={code:0, data:[]};
+	hqChartData.symbol=option.Obj.Symbol;
+	hqChartData.name=data.name;
+	
+	var yClose=data.preKPrice;;
+	for(var i=0;i<data.klines.length; ++i)
+	{
+	    var strItem=data.klines[i];
+	    var item=strItem.split(',');
+	    var today = new Date(Date.parse(item[0]));  
+	    var date=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
+	   
+	    var open=parseFloat(item[1]);
+	    var close=parseFloat(item[2]);
+	    var high=parseFloat(item[3]);
+	    var low=parseFloat(item[4]);
+	    var vol=parseFloat(item[5])*100;
+	    var amount=parseFloat(item[6]);
+	
+	    var newItem=[ date, yClose, open, high, low, close, vol, amount];
+	    hqChartData.data.push(newItem);
+	
+	    yClose=close;
+	}
+	
+	HQData.InvokeCallback(hqChartData, callback);
+}
+
+HQData.RecvSymbolData_Minute=function(recvData, callback, option) //分钟K
+{
+	var data=recvData.data;
+	
+	var hqChartData={code:0, data:[]};
+	hqChartData.symbol=option.Obj.Symbol;
+	hqChartData.name=data.name;
+	
+	var yClose=data.preKPrice;;
+	for(var i=0;i<data.klines.length; ++i)
+	{
+	    var strItem=data.klines[i];
+	    var item=strItem.split(',');
+	    var today = HQData.StringToDateTime(item[0]);  
+	    var date=today.Date;
+	    var time=today.Time;
+	   
+	    var open=parseFloat(item[1]);
+	    var close=parseFloat(item[2]);
+	    var high=parseFloat(item[3]);
+	    var low=parseFloat(item[4]);
+	    var vol=parseFloat(item[5])*100;
+	    var amount=parseFloat(item[6]);
+	
+	    var newItem=[ date, yClose, open, high, low, close, vol, amount, time];
+	    hqChartData.data.push(newItem);
+	
+	    yClose=close;
+	}
+	
+	HQData.InvokeCallback(hqChartData, callback);
 }
 
 module.exports =

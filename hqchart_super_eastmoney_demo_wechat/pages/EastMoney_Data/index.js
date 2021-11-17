@@ -331,6 +331,9 @@ Page(
                 //self.KLineOption.KLine.Period=period;
                 self.KLineOption.NetworkFilter = (data, callback) => { self.NetworkFilter(data, callback); };  //网络请求回调函数
                 self.KLineChart.SetOption(self.KLineOption);
+
+                self.KLineChart.AddEventCallback({ event: JSCommon.JSCHART_EVENT_ID.RECV_START_AUTOUPDATE, callback: self.OnStartAutoUpdate });
+                self.KLineChart.AddEventCallback({ event: JSCommon.JSCHART_EVENT_ID.RECV_STOP_AUTOUPDATE, callback: self.OnStopAutoUpdate });
             })
     },
 
@@ -385,6 +388,16 @@ Page(
                 break;
         }   
 
+    },
+
+    OnStartAutoUpdate(e, data , obj)
+    {
+        console.log('[App:OnStartAutoUpdate] ', data);
+    },
+
+    OnStopAutoUpdate(e, data , obj)
+    {
+        console.log('[App:OnStopAutoUpdate] ', data);
     },
 
    MinuteTouchStart (event)

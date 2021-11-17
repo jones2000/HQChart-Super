@@ -92,6 +92,10 @@
 </template>
 
 <script>
+	
+
+import H5_HQChart from '@/uni_modules/jones-hqchart2/js_sdk/umychart.uniapp.h5.js'
+
 
 import HQChartControl from '@/uni_modules/jones-hqchart2/js_sdk/HQChartControl.vue'
 import { EastMoney } from "./HQData.js"
@@ -293,6 +297,7 @@ DefaultData.GetKLineIndexMenu=function()
         {Name:'KDJ',    ID:"KDJ",   WindowIndex:1},
         {Name:'DMI',    ID:"DMI",   WindowIndex:1},
         {Name:'ROC',    ID:"ROC",   WindowIndex:1},
+		{Name:"测试",   ID:"index_test" }
     ];
 
     return data;
@@ -538,6 +543,12 @@ export default
 		ChangeKlineIndex(index, item) 
 		{
 			let hqchartCtrl=this.$refs.HQChartCtrl;
+			if (item.ID=="index_test") 
+			{
+				this.ExecuteNonUIIndex();	//计算指标
+				return;
+			}
+			
 			if (hqchartCtrl) hqchartCtrl.ChangeKLineIndex(item.WindowIndex, item.ID);
 		},
 		
@@ -638,8 +649,60 @@ export default
 				case 'KLineChartContainer::RequestMinuteRealtimeData':          //分钟增量数据更新
 					EastMoney.HQData.NetworkFilter(data, callback);
 					break;
+					
+				case "JSSymbolData::GetSymbolData":		//无图形指标计算
+					EastMoney.HQData.NetworkFilter(data, callback);
+					break;
+				
 			}   
 		},
+		
+		
+		
+		/////////////////////////////////////////////////////////////////////
+		// 独立指标计算,只算数据, H5才有。
+		//
+		//
+		////////////////////////////////////////////////////////////////////
+		
+		ExecuteNonUIIndex()
+		{
+			var obj=
+			{
+				Name:'测试', ID:'11111', 
+				Args:[ { Name:'M1', Value:5}, { Name:'M2', Value:10 }, { Name:'M3', Value:20} ],
+				Script: //脚本
+					'MA1:MA(CLOSE,M1);\n'+
+					'MA2:MA(CLOSE,M2);\n'+
+					'MA3:MA(CLOSE,M3);',
+				ErrorCallback:this.ExecuteNonIndexError,
+				FinishCallback:this.ExecuteNonIndexFinish,
+				NetworkFilter:this.NetworkFilter
+			};
+			
+			var indexConsole=new H5_HQChart.ScriptIndexConsole(obj);
+
+			var stockObj=
+			{
+				HQDataType:0,	//K线图
+				Stock: {Symbol:'600000_1.sh'},
+				Request: { MaxDataCount: 500, MaxMinuteDayCount:5 },
+				Period:5 , Right:1,
+			};
+
+			indexConsole.ExecuteScript(stockObj);
+		},
+		
+		ExecuteNonIndexError(error)
+		{
+			console.log('[ExecuteNonIndexError] Error: ',error)
+		},
+		
+		ExecuteNonIndexFinish(data, jsExectute)
+		{
+			console.log('[ExecuteNonIndexFinish] data, jsExectute ',data, jsExectute)
+		},
+		
 	}
 }
 </script>

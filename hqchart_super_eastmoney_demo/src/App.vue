@@ -92,7 +92,7 @@ import  EastMoney  from "./eastmoney/HQData.js"
 //import '../jscommon/umychart.resource/css/tools.css'
 //import '../jscommon/umychart.resource/font/iconfont.css'
 //var HQChart={ Chart:Chart };
-
+HQChart.Chart.MARKET_SUFFIX_NAME.GetMarketStatus = function (symbol)  { return 2; } //一直交易
 
 
 function DefaultData() { }
@@ -254,6 +254,29 @@ DefaultData.GetTestSymbolMenu=function()
             ]
         },
         {
+            Title: '北交所',
+            Icon: '',
+            Sub: 
+            [
+                {
+                    Name: '凯添燃气',
+                    Code: '831010_0.bj'
+                },
+                {
+                    Name: '驱动力',
+                    Code: '838275_0.bj'
+                },
+                {
+                    Name: '齐鲁华信',
+                    Code: '830832_0.bj'
+                },
+                {
+                    Name: '苏轴股份',
+                    Code: '430418_0.bj'
+                }
+            ]
+        },
+        {
             Title: 'ETF基金',
             Icon: '',
             Sub:
@@ -292,6 +315,10 @@ DefaultData.GetTestSymbolMenu=function()
                 {
                     Name: '汇丰控股',
                     Code: '00005_116.hk'
+                },
+                {
+                    Name:"长和",
+                    Code:"00001_116.hk"
                 },
                 {
                     Name: '恒生指数',
