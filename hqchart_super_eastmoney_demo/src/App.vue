@@ -1206,7 +1206,7 @@ export default
 
         NetworkFilter(data, callback)   //第3方数据替换接口
         {
-            console.log('[HQChartDemo::NetworkFilter] data', data);
+            EastMoney.HQData.Log('[HQChartDemo::NetworkFilter] data', data);
 
             switch(data.Name) 
             {

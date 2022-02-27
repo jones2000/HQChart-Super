@@ -22,6 +22,11 @@ function HQData()  { }
 
 HQData.Explain="东财财富网接口";
 
+HQChart.Chart.JSConsole.Chart.Log=()=>{ }
+HQChart.Chart.JSConsole.Complier.Log=()=>{ }
+
+
+HQData.Log=HQChart.Chart.JSConsole.Chart.Log;
 
 HQData.SetMinuteChartCoordinate=function()
 {
@@ -105,7 +110,7 @@ HQData.SetMinuteChartCoordinate=function()
 
 HQData.NetworkFilter=function(data, callback)
 {
-    console.log(`[HQData::NetworkFilter] ${HQData.Explain}`, data);
+    HQData.Log(`[HQData::NetworkFilter] ${HQData.Explain}`, data);
 
     switch(data.Name) 
     {
@@ -202,7 +207,8 @@ HQData.RecvMinuteData=function(recvData, callback, option)
 
     if (option.Data.Self.IsDestroy==false)
 	{
-        console.log("[HQData.RecvMinuteDaysData] hqchartData ", hqchartData)
+        
+        HQData.Log("[HQData.RecvMinuteDaysData] hqchartData ", hqchartData)
 		callback(hqchartData);
     }
 }
@@ -296,7 +302,7 @@ HQData.RecvMinuteDaysData=function(recvData, callback, option)
 
     if (option.Data.Self.IsDestroy==false)
 	{
-        console.log("[HQData.RecvMinuteDaysData] hqchartData ", hqchartData)
+        HQData.Log("[HQData.RecvMinuteDaysData] hqchartData ", hqchartData)
 		callback(hqchartData);
     }
 }
@@ -391,7 +397,7 @@ HQData.RecvMinuteDaysDataV2=function(recvData, callback, option)
 
     if (option.Data.Self.IsDestroy==false)
 	{
-        console.log("[HQData.RecvMinuteDaysData] hqchartData ", hqchartData)
+        HQData.Log("[HQData.RecvMinuteDaysData] hqchartData ", hqchartData)
 		callback(hqchartData);
     }
 }
@@ -1215,7 +1221,7 @@ HQData.RecvHistoryData=function(recvData, callback, option)
 
     if (option.Data.Self.IsDestroy==false)
 	{
-        console.log("[HQData.RecvHistoryData] hqchartData ", hqChartData)
+        HQData.Log("[HQData.RecvHistoryData] hqchartData ", hqChartData)
 		callback(hqChartData);
     }
 }
@@ -1281,7 +1287,7 @@ HQData.RecvRealtimeData=function(recvData, callback, option)
 
     if (option.Data.Self.IsDestroy==false)
 	{
-        console.log("[HQData.RecvRealtimeData] hqchartData ", hqchartData)
+        HQData.Log("[HQData.RecvRealtimeData] hqchartData ", hqchartData)
 		callback(hqchartData);
     }
 }
@@ -1341,7 +1347,7 @@ HQData.RecvHistoryMinuteData=function(recvData, callback, option)
 
     if (option.Data.Self.IsDestroy==false)
 	{
-        console.log("[HQData.RecvHistoryMinuteData] hqchartData ", hqChartData)
+        HQData.Log("[HQData.RecvHistoryMinuteData] hqchartData ", hqChartData)
 		callback(hqChartData);
     }
 }
@@ -1400,7 +1406,7 @@ HQData.RecvMinuteRealtimeData=function(recvData, callback, option)
 
     if (option.Data.Self.IsDestroy==false)
 	{
-        console.log("[HQData.RecvMinuteRealtimeData] hqchartData ", hqChartData)
+        HQData.Log("[HQData.RecvMinuteRealtimeData] hqchartData ", hqChartData)
 		callback(hqChartData);
     }
 }
