@@ -11,7 +11,7 @@
    教程中所有的实例中使用的数据都来自互联网,或测试数据。仅用于学习HQChart图形使用. 教程禁止用于商业产品
 */
 
-import H5_HQChart from '@/uni_modules/jones-hqchart2/js_sdk/umychart.uniapp.h5.js'
+//import H5_HQChart from '@/uni_modules/jones-hqchart2/js_sdk/umychart.uniapp.h5.js'
 
 // #ifdef H5
 import HQChart from '@/uni_modules/jones-hqchart2/js_sdk/umychart.uniapp.h5.js'
@@ -23,7 +23,7 @@ var JSChart=HQChart.JSChart;
 
 // #ifndef H5
 import { JSCommon } from "@/uni_modules/jones-hqchart2/js_sdk/umychart.wechat.3.0.js";
-import { JSCommonCoordinateData_MARKET_SUFFIX_NAME as MARKET_SUFFIX_NAME } from '@/uni_modules/jones-hqchart2/js_sdk/umychart.coordinatedata.wechat.js'
+import { MARKET_SUFFIX_NAME } from '@/uni_modules/jones-hqchart2/js_sdk/umychart.coordinatedata.wechat.js'
 import { JSCommonHQStyle} from '@/uni_modules/jones-hqchart2/js_sdk/umychart.style.wechat.js'
 
 var JSChart=JSCommon.JSChart;
@@ -252,7 +252,7 @@ HQData.RecvMinuteData=function(recvData, callback, option)
 
     if (option.Data.Self.IsDestroy==false)
 	{
-        console.log("[HQData.RecvMinuteDaysData] hqchartData ", hqchartData);
+        //console.log("[HQData.RecvMinuteDaysData] hqchartData ", hqchartData);
 		HQData.InvokeCallback(hqchartData, callback);
     }
 }
@@ -346,7 +346,7 @@ HQData.RecvMinuteDaysData=function(recvData, callback, option)
 
     if (option.Data.Self.IsDestroy==false)
 	{
-        console.log("[HQData.RecvMinuteDaysData] hqchartData ", hqchartData);
+        //console.log("[HQData.RecvMinuteDaysData] hqchartData ", hqchartData);
 		HQData.InvokeCallback(hqchartData, callback);
     }
 }
@@ -754,12 +754,23 @@ HQData.GetCustomTradeTimeData=function(key)
 ////////////////////////////////////////////////////////////////////////////
 HQData.CreateUSAData=function(minuteStringData)
 {
+	/*
+	//夏令时
     const TIME_SPLIT =
     [
         { Start: 2130, End: 2359 },
         { Start: 0, End: 400 }
     ];
-
+	*/
+	
+	//非夏令时     
+	const TIME_SPLIT =
+	[
+		{ Start: 2230, End: 2359 },
+		{ Start: 0, End: 500 }
+	];
+	 
+	            
     return minuteStringData.CreateTimeData(TIME_SPLIT);
 }
 
@@ -1248,7 +1259,7 @@ HQData.RecvHistoryData=function(recvData, callback, option)
 
     if (option.Data.Self.IsDestroy==false)
 	{
-        console.log("[HQData.RecvHistoryData] hqchartData ", hqChartData);
+        //console.log("[HQData.RecvHistoryData] hqchartData ", hqChartData);
 		
 		HQData.InvokeCallback(hqChartData, callback);
     }
@@ -1434,7 +1445,7 @@ HQData.RecvMinuteRealtimeData=function(recvData, callback, option)
 
     if (option.Data.Self.IsDestroy==false)
 	{
-        console.log("[HQData.RecvMinuteRealtimeData] hqchartData ", hqChartData);
+        //console.log("[HQData.RecvMinuteRealtimeData] hqchartData ", hqChartData);
 		HQData.InvokeCallback(hqChartData, callback);
     }
 }
