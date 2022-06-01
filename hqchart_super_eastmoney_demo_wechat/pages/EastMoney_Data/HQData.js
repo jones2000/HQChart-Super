@@ -12,7 +12,7 @@
 */
 
 import { JSCommon } from "../../jscommon/umychart.wechat.3.0.js";
-import { JSCommonCoordinateData_MARKET_SUFFIX_NAME as MARKET_SUFFIX_NAME } from '../../jscommon/umychart.coordinatedata.wechat.js'
+import { MARKET_SUFFIX_NAME } from '../../jscommon/umychart.coordinatedata.wechat.js'
 
 function HQData()  { }
 

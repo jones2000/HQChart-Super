@@ -83,12 +83,13 @@ DefaultData.GetKLineOption=function()
     var option=
     {
         Type:'历史K线图',   //创建图形类型
+        //Type:'历史K线图横屏',
 
         Windows: //窗口指标
         [
             {Index:"MA",    },
             {Index:"VOL",    },
-            {Index:"MACD",   }
+            //{Index:"MACD",   }
         ], 
                 
         Symbol:'000001.sh',         
@@ -123,7 +124,7 @@ DefaultData.GetKLineOption=function()
     
         Border: //边框
         {
-            Left:2,    //左边间距
+            Left:0,    //左边间距
             Right:20,     //右边间距
             Top:25,
             Bottom:25,
@@ -203,7 +204,7 @@ DefaultData.GetKLineIndexMenu=function()
         {Name:'MACD',   ID:"MACD",  WindowIndex:1 },
         {Name:'KDJ',    ID:"KDJ",   WindowIndex:1},
         {Name:'DMI',    ID:"DMI",   WindowIndex:1},
-        {Name:'ROC',    ID:"ROC",   WindowIndex:1},
+        {Name:'VOL',    ID:"VOL",   WindowIndex:1},
     ];
 
     return data;
@@ -244,6 +245,7 @@ Page(
     MinuteChart: null,
     KLineChart:null,
     Symbol:'AAPL_105.usa',      //HQChart内部编码美股加后缀.usa AAPL.usa
+    //Symbol:"CJ205.CZC",
 
     MinuteOption:DefaultData.GetMinuteOption(),
     KLineOption:DefaultData.GetKLineOption(),
