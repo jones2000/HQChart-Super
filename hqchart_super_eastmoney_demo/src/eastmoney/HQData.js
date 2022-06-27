@@ -179,7 +179,8 @@ HQData.RecvMinuteData=function(recvData, callback, option)
     {
         var strItem=data.trends[i];
         var item=strItem.split(',');
-        var today = new Date(Date.parse(item[0]));  
+        // var today = new Date(Date.parse(item[0])); // 不兼容 safari 浏览器	
+        var today = new Date(Date.parse(item[0].replace(/-/g, "/"))); // 同时兼容 safari 浏览器
         var date=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
         var time=today.getHours()*100+today.getMinutes();
 
@@ -255,7 +256,8 @@ HQData.RecvMinuteDaysData=function(recvData, callback, option)
     {
         var strItem=data.trends[i];
         var item=strItem.split(',');
-        var today = new Date(Date.parse(item[0]));  
+        // var today = new Date(Date.parse(item[0])); // 不兼容 safari 浏览器	
+        var today = new Date(Date.parse(item[0].replace(/-/g, "/"))); // 同时兼容 safari 浏览器
         var date=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
         var time=today.getHours()*100+today.getMinutes();
         if (time==firstTime) break;
@@ -265,7 +267,8 @@ HQData.RecvMinuteDaysData=function(recvData, callback, option)
     {
         var strItem=data.trends[i];
         var item=strItem.split(',');
-        var today = new Date(Date.parse(item[0]));  
+        // var today = new Date(Date.parse(item[0])); // 不兼容 safari 浏览器	
+        var today = new Date(Date.parse(item[0].replace(/-/g, "/"))); // 同时兼容 safari 浏览器 
         var date=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
         var time=today.getHours()*100+today.getMinutes();
 
