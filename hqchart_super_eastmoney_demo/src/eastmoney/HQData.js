@@ -11,7 +11,7 @@
    教程中所有的实例中使用的数据都来自互联网,或测试数据。仅用于学习HQChart图形使用. 教程禁止用于商业产品
 */
 
-import $, { hasData } from 'jquery'
+import $ from 'jquery'
 import HQChart from 'hqchart'
 
 //源码调试用
@@ -137,6 +137,10 @@ HQData.NetworkFilter=function(data, callback)
         case 'KLineChartContainer::RequestMinuteRealtimeData':          //分钟增量数据更新
             HQData.RequestMinuteRealtimeData(data,callback);
             break;
+
+        case "JSSymbolData::GetSymbolData":                             //指标里面的K线数据
+            HQData.RequestScriptSymbolData(data, callback);
+            break;
     }
 }
 
@@ -179,8 +183,7 @@ HQData.RecvMinuteData=function(recvData, callback, option)
     {
         var strItem=data.trends[i];
         var item=strItem.split(',');
-        // var today = new Date(Date.parse(item[0])); // 不兼容 safari 浏览器	
-        var today = new Date(Date.parse(item[0].replace(/-/g, "/"))); // 同时兼容 safari 浏览器
+        var today = new Date(Date.parse(item[0]));  
         var date=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
         var time=today.getHours()*100+today.getMinutes();
 
@@ -256,8 +259,7 @@ HQData.RecvMinuteDaysData=function(recvData, callback, option)
     {
         var strItem=data.trends[i];
         var item=strItem.split(',');
-        // var today = new Date(Date.parse(item[0])); // 不兼容 safari 浏览器	
-        var today = new Date(Date.parse(item[0].replace(/-/g, "/"))); // 同时兼容 safari 浏览器
+        var today = new Date(Date.parse(item[0]));  
         var date=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
         var time=today.getHours()*100+today.getMinutes();
         if (time==firstTime) break;
@@ -267,8 +269,7 @@ HQData.RecvMinuteDaysData=function(recvData, callback, option)
     {
         var strItem=data.trends[i];
         var item=strItem.split(',');
-        // var today = new Date(Date.parse(item[0])); // 不兼容 safari 浏览器	
-        var today = new Date(Date.parse(item[0].replace(/-/g, "/"))); // 同时兼容 safari 浏览器 
+        var today = new Date(Date.parse(item[0]));  
         var date=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
         var time=today.getHours()*100+today.getMinutes();
 
@@ -1216,6 +1217,14 @@ HQData.RecvHistoryData=function(recvData, callback, option)
         var amount=parseFloat(item[6]);
 
         var newItem=[ date, yClose, open, high, low, close, vol, amount];
+
+        var value=parseFloat(item[10]); //换手率
+        if (value>0 && vol>0)
+        {
+            var flowCapital=vol/value*100;
+            newItem[15]=flowCapital;
+        }
+       
         hqChartData.data.push(newItem);
 
         yClose=close;
@@ -1413,6 +1422,65 @@ HQData.RecvMinuteRealtimeData=function(recvData, callback, option)
 		callback(hqChartData);
     }
 }
+
+
+HQData.RequestScriptSymbolData=function(data, callback)
+{
+    data.PreventDefault=true;
+    var symbol=data.Request.Data.symbol;        //请求的股票代码
+    var period=data.Request.Data.period;        //周期
+    var right=data.Request.Data.right;          //复权
+    var dateRange=data.Request.KLineDataTimeRange;  //K线范围
+
+    console.log(`[HQData::RequestScriptSymbolData] Symbol=${symbol}`);
+    var obj=HQData.GetKLineApiUrl(symbol,period, right, null);
+
+    $.ajax(
+    {
+        url: obj.Url,
+        type: "GET",
+        success:function(recvData) 
+        {
+            HQData.RecvScriptSymbolData(recvData, callback, { Data:data, Obj:obj });                 
+        }
+    });
+}
+
+
+HQData.RecvScriptSymbolData=function(recvData, callback, option)
+{
+    var data=recvData.data;
+
+    var hqChartData={code:0, data:[]};
+    hqChartData.symbol=option.Obj.Symbol;
+    hqChartData.name=data.name;
+
+    var yClose=data.preKPrice;;
+    for(var i=0;i<data.klines.length; ++i)
+    {
+        var strItem=data.klines[i];
+        var item=strItem.split(',');
+        var today = new Date(Date.parse(item[0]));  
+        var date=today.getFullYear()*10000+(today.getMonth()+1)*100+today.getDate();
+        var time=today.getHours()*100+today.getMinutes();
+       
+        var open=parseFloat(item[1]);
+        var close=parseFloat(item[2]);
+        var high=parseFloat(item[3]);
+        var low=parseFloat(item[4]);
+        var vol=parseFloat(item[5])*100;
+        var amount=parseFloat(item[6]);
+
+        var newItem=[ date, yClose, open, high, low, close, vol, amount, time];
+        hqChartData.data.push(newItem);
+
+        yClose=close;
+    }
+
+    HQData.Log("[HQData.RecvScriptSymbolData] hqchartData ", hqChartData)
+	callback(hqChartData);
+}
+
 
 export default
 {

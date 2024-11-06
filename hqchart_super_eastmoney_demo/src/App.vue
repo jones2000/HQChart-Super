@@ -82,9 +82,12 @@
 
 <script>
 import _ from 'lodash'
+
 import HQChart from 'hqchart'
 import 'hqchart/src/jscommon/umychart.resource/css/tools.css'
 import 'hqchart/src/jscommon/umychart.resource/font/iconfont.css'
+import 'hqchart/src/jscommon/umychart.resource/font/drawtool/iconfont.css'
+
 import  EastMoney  from "./eastmoney/HQData.js"
 
 //源码调试用
@@ -106,7 +109,7 @@ DefaultData.GetMinuteOption=function()
 
         Windows: //窗口指标
         [
-            {Index:"MACD", Modify:false, Change:false, Close:false }
+            {Index:"MACD", Modify:true, Change:true, Close:true }
         ], 
                 
         Symbol:'AAPL.usa',         
@@ -117,7 +120,10 @@ DefaultData.GetMinuteOption=function()
         //CorssCursorTouchEnd:true,
 
         CorssCursorInfo:{  Left:1, Right:1 },
-    
+        SearchIndexDialog:{ Enable:true },
+        SelectRectDialog:{ Enable:true },
+        ModifyIndexParamDialog:{ Enable:true },
+
         MinuteLine:
         {
             IsDrawAreaPrice:true,      //是否画价格面积图
@@ -199,10 +205,6 @@ DefaultData.GetTestSymbolMenu=function()
                 {
                     Name: '亚马逊',
                     Code: 'AMZN_105.usa'
-                },
-                {
-                    Name: '人人网',
-                    Code: 'RENN_106.usa'
                 },
                 {
                     Name: '滴滴',
@@ -927,16 +929,22 @@ DefaultData.GetKLineOption=function()
         Windows: //窗口指标
         [
             {Index:"MA",    Modify:true, Modify:true, Change:true },
-            {Index:"VOL",   Modify:true, Change:true, Close:false },
-            {Index:"MACD",  Modify:true, Change:true, Close:false }
+            //{Name: 'STKINDI_TEST', Script:'STKINDI("AMZN_105.usa","MA.MA1#MIN1",10,15,20);' },
+            {Index:"MACD",  Modify:true, Change:true, Close:false },
+            {Index:"VOL",  Modify:true, Change:true, Close:false }
         ], 
                 
         Symbol:'000001.sh',         
         IsAutoUpdate:true,          //是自动更新数据
         AutoUpdateFrequency:15000,
         IsApiPeriod:true,
-        IsShowRightMenu:false,      //是否显示右键菜单
+        //IsShowRightMenu:false,      //是否显示右键菜单
         //CorssCursorTouchEnd:true,
+
+        EnablePopMenuV2:true,
+        EnableDrawToolDialogV2:true,
+        EnableModifyDrawDialogV2:true,
+        EnableResize:true,
 
         KLine:
         {
@@ -951,8 +959,15 @@ DefaultData.GetKLineOption=function()
             RightSpaceCount:2,       
         },
 
-        CorssCursorInfo:{  Left:0, Right:1 },
-    
+        CorssCursorInfo:{  Left:0, Right:1, EnableKeyboard:true},
+
+        SearchIndexDialog:{ Enable:true },
+        TooltipDialog:{ Enable:true, Style:1 },
+        SelectRectDialog:{ Enable:true },
+        KLineTooltip:{ Enable:true, EnableKeyDown:false },
+        FloatTooltip:{ Enable:true, },
+        ModifyIndexParamDialog:{ Enable:true },
+
         KLineTitle: //标题设置
         {
             IsShowName:true,       //不显示股票名称
@@ -1015,7 +1030,7 @@ DefaultData.GetKLinePeriodMenu=function()
         {Name:"周线", ID: 1 },
         {Name:"月线", ID: 2 },
 
-        //{Name:"1分钟", ID: 4 },
+        {Name:"1分钟", ID: 4 },
         {Name:"5分钟", ID: 5 },
         {Name:"15分钟", ID: 6 },
         {Name:"30分钟", ID: 7 },
@@ -1057,7 +1072,7 @@ export default
             MinuteIndexMenu: DefaultData.GetMinuteIndexMenu(),
             KLineIndexMenu: DefaultData.GetKLineIndexMenu(),
 
-            Symbol:'AAPL_105.usa',      //HQChart内部编码美股加后缀.usa AAPL.usa
+            Symbol:'300059_0.sz',      //HQChart内部编码美股加后缀.usa AAPL.usa
             Chart:null,             //图形控件  分时图
             KLineChart:null,        //图形控件  K线图
             NavMenuAry: DefaultData.GetTestSymbolMenu(),
@@ -1123,7 +1138,11 @@ export default
         {
             EastMoney.HQData.SetMinuteChartCoordinate();
             var blackStyle=HQChart.Chart.HQChartStyle.GetStyleConfig(HQChart.Chart.STYLE_TYPE_ID.BLACK_ID); //读取黑色风格配置
+            blackStyle.ToolbarButtonStyle=1;
             HQChart.Chart.JSChart.SetStyle(blackStyle);
+
+            var resource=HQChart.Chart.JSChart.GetResource();
+            resource.ToolbarButtonStyle=1;
         },
 
         CreateMinuteChart()
@@ -1145,6 +1164,19 @@ export default
 
             var option=DefaultData.GetKLineOption();
             option.Symbol=this.Symbol;
+            option.EventCallback=
+            [
+                {
+                    event:HQChart.Chart.JSCHART_EVENT_ID.ON_CHANGE_KLINE_PERIOD,    //切换周期
+                    callback:(event, data, obj)=>{ this.OnChangeKLinePeriod(event, data, obj); }
+                },
+
+                {
+                    event:HQChart.Chart.JSCHART_EVENT_ID.ON_CHANGE_KLINE_RIGHT,    //切换周期
+                    callback:(event, data, obj)=>{ this.OnChangeKLineRight(event, data, obj); }
+                },
+            ]
+
             option.NetworkFilter = (data, callback) => { this.NetworkFilter(data, callback); };  //网络请求回调函数
 
             var chart=HQChart.Chart.JSChart.Init(this.$refs.kline2);
@@ -1188,10 +1220,38 @@ export default
             this.KLineChart.ChangePeriod(item.ID);
         },
 
+        OnChangeKLinePeriod(event, data, obj)
+        {
+            var aryPeriod=DefaultData.GetKLinePeriodMenu();
+            for(var i=0;i<aryPeriod.length;++i)
+            {
+                var item=aryPeriod[i];
+                if (item.ID==data.Now.Period)
+                {
+                    this.KLinePeriodIndex=i;
+                    return;
+                }
+            }
+        },
+
         OnClickKLineRightMenu(index,item)   //K线复权
         {
             this.KLineRightIndex=index;
             this.KLineChart.ChangeRight(item.ID);
+        },
+
+        OnChangeKLineRight(event, data, obj)
+        {
+            var aryRight=DefaultData.GetKLineRightMenu();
+            for(var i=0;i<aryRight.length;++i)
+            {
+                var item=aryRight[i];
+                if (item.ID==data.Now.Right)
+                {
+                    this.KLineRightIndex=i;
+                    return;
+                }
+            }
         },
 
         ChangeMinuteIndex(item) //切换分时图指标
@@ -1231,6 +1291,10 @@ export default
                     EastMoney.HQData.NetworkFilter(data, callback);
                     break;
                 case 'KLineChartContainer::RequestMinuteRealtimeData':          //分钟增量数据更新
+                    EastMoney.HQData.NetworkFilter(data, callback);
+                    break;
+
+                case "JSSymbolData::GetSymbolData":                             //指标里面的K线数据
                     EastMoney.HQData.NetworkFilter(data, callback);
                     break;
             }   
