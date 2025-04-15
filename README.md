@@ -98,9 +98,9 @@ HQChart插件对接第3方数据用例
 [https://jones2000.github.io/HQChart-Super/demo_show/Sharingan_THX_uniapp_vue2/index.html#/](https://jones2000.github.io/HQChart-Super/demo_show/Sharingan_THX_uniapp_vue2/index.html#/) 
 
 ### 效果图
-![截图](/pic/Sharingan_THX_uniapp_vue2_1.PNG)
-![截图](/pic/Sharingan_THX_uniapp_vue2_2.PNG)
-![截图](/pic/Sharingan_THX_uniapp_vue2_3.PNG)
+![截图](/pic/Sharingan_THX_uniapp_vue2_1.png)
+![截图](/pic/Sharingan_THX_uniapp_vue2_2.png)
+![截图](/pic/Sharingan_THX_uniapp_vue2_3.png)
 
 
 
