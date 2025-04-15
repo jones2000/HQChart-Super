@@ -93,6 +93,17 @@ HQChart插件对接第3方数据用例
 ![截图](/pic/hqchart_super_eastmoney_demo_uniapp_1.gif)
 
 
+## 仿同花顺H5页面
+
+[https://jones2000.github.io/HQChart-Super/demo_show/Sharingan_THX_uniapp_vue2/index.html#/](https://jones2000.github.io/HQChart-Super/demo_show/Sharingan_THX_uniapp_vue2/index.html#/) 
+
+### 效果图
+![截图](/pic/Sharingan_THX_uniapp_vue2_1.PNG)
+![截图](/pic/Sharingan_THX_uniapp_vue2_2.PNG)
+![截图](/pic/Sharingan_THX_uniapp_vue2_3.PNG)
+
+
+
 
 # 启动
 npm run dev
