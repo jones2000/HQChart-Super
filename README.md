@@ -63,9 +63,9 @@ HQChart插件对接第3方数据用例
 16. 美国洲际交易所
 17. 北交所
 ### 效果图
-![截图](/pic/hqchart_super_eastmoney_demo_wechat_1.PNG)
-![截图](/pic/hqchart_super_eastmoney_demo_wechat_2.PNG)
-![截图](/pic/hqchart_super_eastmoney_demo_wechat_3.PNG)
+![截图](/pic/hqchart_super_eastmoney_demo_wechat_1.png)
+![截图](/pic/hqchart_super_eastmoney_demo_wechat_2.png)
+![截图](/pic/hqchart_super_eastmoney_demo_wechat_3.png)
 
 ## 3.对接东方财富网页数据uniapp版本
 ### 示例源码地址
